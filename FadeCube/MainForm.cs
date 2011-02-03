@@ -22,15 +22,28 @@ namespace FadeCube
         private void MainForm_Load(object sender, EventArgs e)
         {
             Animation = new CubeAnimationData();
+            frameList.DataSource = null;
             frameList.DataSource = Animation.Frames;
             frameList.DisplayMember = "FrameName";
         }
 
+        /*protected override void OnPaint(PaintEventArgs e)
+        {
+            Point p1 = new Point(0, ClientSize.Height / 2);
+            Point p2 = new Point(ClientSize.Width, ClientSize.Height / 2);
+            e.Graphics.DrawLine(new Pen(Color.Black), p1, p2);
+
+            p1 = new Point(ClientSize.Width / 2, 0);
+            p2 = new Point(ClientSize.Width / 2, ClientSize.Height);
+            e.Graphics.DrawLine(new Pen(Color.Black), p1, p2);
+        }*/
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (newFrameName.Text != "")
+            if (FrameName.Text != "")
             {
-                CubeAnimation.addFrameToAnimation( Animation, newFrameName.Text );
+                CubeAnimation.addFrameToAnimation( Animation, FrameName.Text );
+                frameList.DataSource = null;
                 frameList.DataSource = Animation.Frames;
                 frameList.DisplayMember = "FrameName";
                 frameList.SelectedIndex = frameList.Items.Count - 1;
@@ -43,6 +56,7 @@ namespace FadeCube
             if (frameList.SelectedIndex > -1)
             {
                 CubeAnimation.removeFrameFromAnimation(Animation, frameList.SelectedIndex);
+                frameList.DataSource = null;
                 frameList.DataSource = Animation.Frames;
                 frameList.DisplayMember = "FrameName";
             }
@@ -51,15 +65,54 @@ namespace FadeCube
         private void btnLoad_Click(object sender, EventArgs e)
         {
             animationOpenDialog.ShowDialog();
-            Animation = CubeAnimation.loadAnimation(animationOpenDialog.FileName);
-            frameList.DataSource = Animation.Frames;
-            frameList.DisplayMember = "FrameName";
+            if (animationOpenDialog.FileName != "")
+            {
+                Animation = CubeAnimation.loadAnimation(animationOpenDialog.FileName);
+                frameList.DataSource = null;
+                frameList.DataSource = Animation.Frames;
+                frameList.DisplayMember = "FrameName";
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             animationSaveDialog.ShowDialog();
-            CubeAnimation.saveAnimation(Animation, animationSaveDialog.FileName);
+            if (animationSaveDialog.FileName != "")
+            {
+                CubeAnimation.saveAnimation(Animation, animationSaveDialog.FileName);
+            }
+        }
+
+        private void btnMoveUp_Click(object sender, EventArgs e)
+        {
+            if (frameList.SelectedIndex > 0)
+            {
+                CubeAnimation.moveUpFrameInAnimation(Animation, frameList.SelectedIndex);
+                frameList.DataSource = null;
+                frameList.DataSource = Animation.Frames;
+                frameList.SelectedIndex = frameList.SelectedIndex - 1;
+                frameList.DisplayMember = "FrameName";
+            }
+        }
+
+        private void btnMoveDown_Click(object sender, EventArgs e)
+        {
+            if (frameList.SelectedIndex < ( Animation.Frames.Length - 1) )
+            {
+                CubeAnimation.moveDownFrameInAnimation(Animation, frameList.SelectedIndex);
+                frameList.DataSource = null;
+                frameList.DataSource = Animation.Frames;
+                frameList.SelectedIndex = frameList.SelectedIndex + 1;
+                frameList.DisplayMember = "FrameName";
+            }
+        }
+
+        private void btnRename_Click(object sender, EventArgs e)
+        {
+            Animation.Frames[frameList.SelectedIndex].FrameName = FrameName.Text;
+            frameList.DataSource = null;
+            frameList.DataSource = Animation.Frames;
+            frameList.DisplayMember = "FrameName";
         }
     }
 
@@ -114,6 +167,29 @@ namespace FadeCube
                 }
             }
             animation.Frames = newFrames;
+        }
+
+        public static void moveUpFrameInAnimation(CubeAnimationData animation, int frameNumber)
+        {
+            if (frameNumber > 0)
+            {
+                CubeAnimationFrame upFrame = animation.Frames[frameNumber - 1];
+                CubeAnimationFrame downFrame = animation.Frames[frameNumber];
+
+                animation.Frames[frameNumber] = upFrame;
+                animation.Frames[frameNumber - 1] = downFrame;
+            }
+        }
+        public static void moveDownFrameInAnimation(CubeAnimationData animation, int frameNumber)
+        {
+            if (frameNumber < (animation.Frames.Length - 1) )
+            {
+                CubeAnimationFrame upFrame = animation.Frames[frameNumber];
+                CubeAnimationFrame downFrame = animation.Frames[frameNumber + 1];
+
+                animation.Frames[frameNumber + 1] = upFrame;
+                animation.Frames[frameNumber] = downFrame;
+            }
         }
     }
 
