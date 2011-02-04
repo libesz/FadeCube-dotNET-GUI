@@ -58,6 +58,8 @@
             this.frameTimeLabel = new System.Windows.Forms.Label();
             this.frameTimeTextBox = new System.Windows.Forms.TextBox();
             this.frameDataGroupBox = new System.Windows.Forms.GroupBox();
+            this.btnFillLayer = new System.Windows.Forms.Button();
+            this.btnFillFrame = new System.Windows.Forms.Button();
             this.brightnessLabel = new System.Windows.Forms.Label();
             this.brightnessRadio3 = new System.Windows.Forms.RadioButton();
             this.brightnessRadio2 = new System.Windows.Forms.RadioButton();
@@ -66,8 +68,6 @@
             this.selectedLayerLabel2 = new System.Windows.Forms.Label();
             this.selectedLayerLabel1 = new System.Windows.Forms.Label();
             this.layerSelectorTrackBar = new System.Windows.Forms.TrackBar();
-            this.btnFillFrame = new System.Windows.Forms.Button();
-            this.btnFillLayer = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
@@ -333,6 +333,26 @@
             this.frameDataGroupBox.TabStop = false;
             this.frameDataGroupBox.Text = "Frame data";
             // 
+            // btnFillLayer
+            // 
+            this.btnFillLayer.Location = new System.Drawing.Point(186, 410);
+            this.btnFillLayer.Name = "btnFillLayer";
+            this.btnFillLayer.Size = new System.Drawing.Size(157, 23);
+            this.btnFillLayer.TabIndex = 10;
+            this.btnFillLayer.Text = "Fill Layer";
+            this.btnFillLayer.UseVisualStyleBackColor = true;
+            this.btnFillLayer.Click += new System.EventHandler(this.btnFillLayer_Click);
+            // 
+            // btnFillFrame
+            // 
+            this.btnFillFrame.Location = new System.Drawing.Point(6, 410);
+            this.btnFillFrame.Name = "btnFillFrame";
+            this.btnFillFrame.Size = new System.Drawing.Size(157, 23);
+            this.btnFillFrame.TabIndex = 9;
+            this.btnFillFrame.Text = "Fill Frame";
+            this.btnFillFrame.UseVisualStyleBackColor = true;
+            this.btnFillFrame.Click += new System.EventHandler(this.btnFillFrame_Click);
+            // 
             // brightnessLabel
             // 
             this.brightnessLabel.AutoSize = true;
@@ -414,25 +434,6 @@
             this.layerSelectorTrackBar.Size = new System.Drawing.Size(334, 45);
             this.layerSelectorTrackBar.TabIndex = 1;
             this.layerSelectorTrackBar.Scroll += new System.EventHandler(this.layerSelectorTrackBar_Scroll);
-            // 
-            // btnFillFrame
-            // 
-            this.btnFillFrame.Location = new System.Drawing.Point(6, 410);
-            this.btnFillFrame.Name = "btnFillFrame";
-            this.btnFillFrame.Size = new System.Drawing.Size(157, 23);
-            this.btnFillFrame.TabIndex = 9;
-            this.btnFillFrame.Text = "Fill Frame";
-            this.btnFillFrame.UseVisualStyleBackColor = true;
-            this.btnFillFrame.Click += new System.EventHandler(this.btnFillFrame_Click);
-            // 
-            // btnFillLayer
-            // 
-            this.btnFillLayer.Location = new System.Drawing.Point(186, 410);
-            this.btnFillLayer.Name = "btnFillLayer";
-            this.btnFillLayer.Size = new System.Drawing.Size(157, 23);
-            this.btnFillLayer.TabIndex = 10;
-            this.btnFillLayer.Text = "Fill Layer";
-            this.btnFillLayer.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
