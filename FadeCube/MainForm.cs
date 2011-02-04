@@ -20,6 +20,9 @@ namespace FadeCube
         private CubeAnimationData Animation;
         private Point layerDataLocation = new Point( 16, 19 );
         FormCubeLayerVisualiser layerVisulaiser;// = new FormCubeLayerVisualiser();
+        string DESTINATION_IP_ADDRESS = "192.168.1.99";
+        int DESTINATION_PORT = 1200;
+
         public MainForm()
         {
             InitializeComponent();
@@ -138,6 +141,7 @@ namespace FadeCube
                 frameTimeTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameTime.ToString();
                 layerVisulaiser.actualFrameData = Animation.Frames[ frameList.SelectedIndex ].FrameData;
                 layerVisulaiser.updateLayerDisplay();
+                CubeAnimation.sendFramePacket(DESTINATION_IP_ADDRESS, DESTINATION_PORT, Animation.Frames[frameList.SelectedIndex].FrameData);
             }
         }
 
@@ -209,14 +213,14 @@ namespace FadeCube
                     break;
             }
             actualFrameData[(100 * actualLayer) + ledNumberInLayer] = byte.Parse( this.actualBrightness.ToString() );
+
+            CubeAnimation.sendFramePacket("192.168.1.99", 1200, this.actualFrameData);
+
 //            MessageBox.Show( "x:" + x.ToString() + ", y:" + y.ToString() );
         }
 
         public void updateLayerDisplay()
         {
-            string DESTINATION_IP_ADDRESS = "192.168.1.99";
-            int DESTINATION_PORT = 1200;
-
             int i;
             for (i = 0; i < 100; i++)
             {
@@ -232,14 +236,6 @@ namespace FadeCube
                         break;
                 }
             }
-
-            IPAddress destinationIPaddress = IPAddress.Parse(DESTINATION_IP_ADDRESS);
-
-            IPEndPoint ep = new IPEndPoint(destinationIPaddress, DESTINATION_PORT);
-            
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            // Send data to the specified endpoint.
-            s.SendTo(CubeAnimation.convertFrameDataToSend(this.actualFrameData), ep);
         }
     }
 
@@ -319,16 +315,18 @@ namespace FadeCube
             }
         }
 
-        public static byte[] convertFrameDataToSend(byte[] frameData)
+        public static void sendFramePacket(string address, int port, byte[] frameData)
         {
+            IPAddress destinationIPaddress = IPAddress.Parse(address);
+            IPEndPoint ep = new IPEndPoint(destinationIPaddress, port);
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             int i = 0;
             byte[] buffer = new byte[250];
             for( i = 0; i < 1000; i++ )
             {
-                
-                buffer[i / 4] |=  byte.Parse( (frameData[i] * (2*(i%4))).ToString());
+                buffer[i / 4] |=  (byte)(frameData[i] << (2*(3-(i%4))));
             }
-            return buffer;
+            s.SendTo( buffer, ep);
         }
     }
 
