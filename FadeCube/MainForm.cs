@@ -8,12 +8,18 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
+using System.Windows.Forms.Layout;
+using System.Net;
+using System.Net.Sockets;
 
 namespace FadeCube
 {
     public partial class MainForm : Form
     {
-        public CubeAnimationData Animation;
+
+        private CubeAnimationData Animation;
+        private Point layerDataLocation = new Point( 16, 19 );
+        FormCubeLayerVisualiser layerVisulaiser;// = new FormCubeLayerVisualiser();
         public MainForm()
         {
             InitializeComponent();
@@ -25,6 +31,14 @@ namespace FadeCube
             frameList.DataSource = null;
             frameList.DataSource = Animation.Frames;
             frameList.DisplayMember = "FrameName";
+            layerVisulaiser = new FormCubeLayerVisualiser(frameDataGroupBox.Controls, layerDataLocation);
+            
+            //ugly part, at startup layerVisualiser object does not exists, so event can not assigned in designer
+            //but is assigned here, thing has to be made as well here (update textboxes, etc)
+            frameList.SelectedIndexChanged += new EventHandler(frameList_SelectedIndexChanged);
+            layerVisulaiser.actualFrameData = Animation.Frames[0].FrameData;
+            frameNameTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameName;
+            frameTimeTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameTime.ToString();
         }
 
         /*protected override void OnPaint(PaintEventArgs e)
@@ -40,9 +54,10 @@ namespace FadeCube
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (FrameName.Text != "")
+            if (frameNameTextBox.Text != "")
             {
-                CubeAnimation.addFrameToAnimation( Animation, FrameName.Text );
+                int frameTime_i = Int16.Parse(frameTimeTextBox.Text);
+                CubeAnimation.addFrameToAnimation( Animation, frameNameTextBox.Text, frameTime_i );
                 frameList.DataSource = null;
                 frameList.DataSource = Animation.Frames;
                 frameList.DisplayMember = "FrameName";
@@ -59,27 +74,6 @@ namespace FadeCube
                 frameList.DataSource = null;
                 frameList.DataSource = Animation.Frames;
                 frameList.DisplayMember = "FrameName";
-            }
-        }
-
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
-            animationOpenDialog.ShowDialog();
-            if (animationOpenDialog.FileName != "")
-            {
-                Animation = CubeAnimation.loadAnimation(animationOpenDialog.FileName);
-                frameList.DataSource = null;
-                frameList.DataSource = Animation.Frames;
-                frameList.DisplayMember = "FrameName";
-            }
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            animationSaveDialog.ShowDialog();
-            if (animationSaveDialog.FileName != "")
-            {
-                CubeAnimation.saveAnimation(Animation, animationSaveDialog.FileName);
             }
         }
 
@@ -107,12 +101,145 @@ namespace FadeCube
             }
         }
 
-        private void btnRename_Click(object sender, EventArgs e)
+        private void btnModify_Click(object sender, EventArgs e)
         {
-            Animation.Frames[frameList.SelectedIndex].FrameName = FrameName.Text;
+            Animation.Frames[frameList.SelectedIndex].FrameName = frameNameTextBox.Text;
             frameList.DataSource = null;
             frameList.DataSource = Animation.Frames;
             frameList.DisplayMember = "FrameName";
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            animationOpenDialog.ShowDialog();
+            if (animationOpenDialog.FileName != "")
+            {
+                Animation = CubeAnimation.loadAnimation(animationOpenDialog.FileName);
+                frameList.DataSource = null;
+                frameList.DataSource = Animation.Frames;
+                frameList.DisplayMember = "FrameName";
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            animationSaveDialog.ShowDialog();
+            if (animationSaveDialog.FileName != "")
+            {
+                CubeAnimation.saveAnimation(Animation, animationSaveDialog.FileName);
+            }
+        }
+
+        private void frameList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (frameList.SelectedIndex > -1)
+            {
+                frameNameTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameName;
+                frameTimeTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameTime.ToString();
+                layerVisulaiser.actualFrameData = Animation.Frames[ frameList.SelectedIndex ].FrameData;
+                layerVisulaiser.updateLayerDisplay();
+            }
+        }
+
+        private void layerSelectorTrackBar_Scroll(object sender, EventArgs e)
+        {
+            selectedLayerLabel2.Text = (layerSelectorTrackBar.Value + 1).ToString();
+            layerVisulaiser.actualLayer = layerSelectorTrackBar.Value;
+            layerVisulaiser.updateLayerDisplay();
+        }
+        //common event for the 4 brightness radiobuttons
+        private void brightnessRadio_Changed(object sender, EventArgs e)
+        {
+            layerVisulaiser.actualBrightness = Int16.Parse((sender as RadioButton).Text);
+        }
+    }
+
+    public class FormCubeLayerVisualiser
+    {
+        private Panel dataPanel;
+        private PictureBox[] layerData;
+        //the upper left coordinate of the LEDlayer
+        private Point location;
+
+        public int actualBrightness = 3;
+        public byte[] actualFrameData;
+        public int actualLayer = 0;
+        public FormCubeLayerVisualiser( Control.ControlCollection parentControl, Point location )
+        {
+            int i = 0;
+            this.location = location;
+            this.dataPanel = new System.Windows.Forms.Panel();
+            this.dataPanel.Location = location;
+            this.dataPanel.Name = "panel1";
+            this.dataPanel.Size = new System.Drawing.Size(320, 320);
+            parentControl.Add(dataPanel);            
+            layerData = new PictureBox[100];
+
+            for (i = 0; i < 100; i++)
+            {
+                this.layerData[i] = new PictureBox();
+                this.layerData[i].Image = global::FadeCube.Properties.Resources.led_0;
+                this.layerData[i].Location = new Point((i % 10) * 32, (i / 10) * 32);
+                this.layerData[i].Name = "layerData" + i.ToString();
+                this.layerData[i].Size = new System.Drawing.Size(32, 32);
+                this.layerData[i].TabIndex = 0;
+                this.layerData[i].TabStop = false;
+                this.layerData[i].SendToBack();
+                this.layerData[i].Click += new System.EventHandler(layerData_Click);
+                dataPanel.Controls.Add(layerData[i]);
+            }
+        }
+
+        //when used clicked on the LEDs
+        private void layerData_Click(object sender, EventArgs e)
+        {
+            //computing relative cursor position to calculate the x-y coordinate in the layer
+            int x = Cursor.Position.X - (sender as PictureBox).Parent.AccessibilityObject.Bounds.X;
+            int y = Cursor.Position.Y - (sender as PictureBox).Parent.AccessibilityObject.Bounds.Y;
+            int ledNumberInLayer = ((y / 32) * 10) + (x / 32);
+            switch (this.actualBrightness)
+            {
+                case 0: this.layerData[ledNumberInLayer].Image = global::FadeCube.Properties.Resources.led_0;
+                    break;
+                case 1: this.layerData[ledNumberInLayer].Image = global::FadeCube.Properties.Resources.led_1;
+                    break;
+                case 2: this.layerData[ledNumberInLayer].Image = global::FadeCube.Properties.Resources.led_2;
+                    break;
+                case 3: this.layerData[ledNumberInLayer].Image = global::FadeCube.Properties.Resources.led_3;
+                    break;
+            }
+            actualFrameData[(100 * actualLayer) + ledNumberInLayer] = byte.Parse( this.actualBrightness.ToString() );
+//            MessageBox.Show( "x:" + x.ToString() + ", y:" + y.ToString() );
+        }
+
+        public void updateLayerDisplay()
+        {
+            string DESTINATION_IP_ADDRESS = "192.168.1.99";
+            int DESTINATION_PORT = 1200;
+
+            int i;
+            for (i = 0; i < 100; i++)
+            {
+                switch (this.actualFrameData[ (100*this.actualLayer) + i ] )
+                {
+                    case 0: this.layerData[i].Image = global::FadeCube.Properties.Resources.led_0;
+                        break;
+                    case 1: this.layerData[i].Image = global::FadeCube.Properties.Resources.led_1;
+                        break;
+                    case 2: this.layerData[i].Image = global::FadeCube.Properties.Resources.led_2;
+                        break;
+                    case 3: this.layerData[i].Image = global::FadeCube.Properties.Resources.led_3;
+                        break;
+                }
+            }
+
+            IPAddress destinationIPaddress = IPAddress.Parse(DESTINATION_IP_ADDRESS);
+
+            IPEndPoint ep = new IPEndPoint(destinationIPaddress, DESTINATION_PORT);
+            
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            // Send data to the specified endpoint.
+            s.SendTo(CubeAnimation.convertFrameDataToSend(this.actualFrameData), ep);
         }
     }
 
@@ -135,7 +262,7 @@ namespace FadeCube
             sw.Close();
         }
 
-        public static void addFrameToAnimation(CubeAnimationData animation, string frameName)
+        public static void addFrameToAnimation(CubeAnimationData animation, string frameName, int frameTime)
         {
             int i = 0;
             CubeAnimationFrame[] newFrames = new CubeAnimationFrame[animation.Frames.Length + 1];
@@ -143,7 +270,7 @@ namespace FadeCube
             {
                 newFrames[i] = animation.Frames[i];
             }
-            newFrames[i] = new CubeAnimationFrame(frameName, 50);
+            newFrames[i] = new CubeAnimationFrame(frameName, frameTime);
             animation.Frames = newFrames;
         }
 
@@ -190,6 +317,18 @@ namespace FadeCube
                 animation.Frames[frameNumber + 1] = upFrame;
                 animation.Frames[frameNumber] = downFrame;
             }
+        }
+
+        public static byte[] convertFrameDataToSend(byte[] frameData)
+        {
+            int i = 0;
+            byte[] buffer = new byte[250];
+            for( i = 0; i < 1000; i++ )
+            {
+                
+                buffer[i / 4] |=  byte.Parse( (frameData[i] * (2*(i%4))).ToString());
+            }
+            return buffer;
         }
     }
 
@@ -271,7 +410,7 @@ namespace FadeCube
     {
         private string frameName;
         private int frameTime;
-        private string frameData;
+        private byte[] frameData = new byte[1000];
 
         public CubeAnimationFrame(string frameName, int frameTime)
         {
@@ -302,7 +441,7 @@ namespace FadeCube
                 frameTime = value;
             }
         }
-        public string FrameData
+        public byte[] FrameData
         {
             get
             {

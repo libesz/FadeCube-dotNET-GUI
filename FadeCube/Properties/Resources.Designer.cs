@@ -59,5 +59,33 @@ namespace FadeCube.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap led_0 {
+            get {
+                object obj = ResourceManager.GetObject("led_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap led_1 {
+            get {
+                object obj = ResourceManager.GetObject("led_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap led_2 {
+            get {
+                object obj = ResourceManager.GetObject("led_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap led_3 {
+            get {
+                object obj = ResourceManager.GetObject("led_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
