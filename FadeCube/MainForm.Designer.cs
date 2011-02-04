@@ -66,6 +66,8 @@
             this.selectedLayerLabel2 = new System.Windows.Forms.Label();
             this.selectedLayerLabel1 = new System.Windows.Forms.Label();
             this.layerSelectorTrackBar = new System.Windows.Forms.TrackBar();
+            this.btnFillFrame = new System.Windows.Forms.Button();
+            this.btnFillLayer = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
@@ -254,7 +256,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 453);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 475);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(593, 22);
             this.statusStrip1.TabIndex = 13;
@@ -314,6 +316,8 @@
             // 
             // frameDataGroupBox
             // 
+            this.frameDataGroupBox.Controls.Add(this.btnFillLayer);
+            this.frameDataGroupBox.Controls.Add(this.btnFillFrame);
             this.frameDataGroupBox.Controls.Add(this.brightnessLabel);
             this.frameDataGroupBox.Controls.Add(this.brightnessRadio3);
             this.frameDataGroupBox.Controls.Add(this.brightnessRadio2);
@@ -324,7 +328,7 @@
             this.frameDataGroupBox.Controls.Add(this.layerSelectorTrackBar);
             this.frameDataGroupBox.Location = new System.Drawing.Point(233, 27);
             this.frameDataGroupBox.Name = "frameDataGroupBox";
-            this.frameDataGroupBox.Size = new System.Drawing.Size(349, 414);
+            this.frameDataGroupBox.Size = new System.Drawing.Size(349, 443);
             this.frameDataGroupBox.TabIndex = 16;
             this.frameDataGroupBox.TabStop = false;
             this.frameDataGroupBox.Text = "Frame data";
@@ -411,11 +415,30 @@
             this.layerSelectorTrackBar.TabIndex = 1;
             this.layerSelectorTrackBar.Scroll += new System.EventHandler(this.layerSelectorTrackBar_Scroll);
             // 
+            // btnFillFrame
+            // 
+            this.btnFillFrame.Location = new System.Drawing.Point(6, 410);
+            this.btnFillFrame.Name = "btnFillFrame";
+            this.btnFillFrame.Size = new System.Drawing.Size(157, 23);
+            this.btnFillFrame.TabIndex = 9;
+            this.btnFillFrame.Text = "Fill Frame";
+            this.btnFillFrame.UseVisualStyleBackColor = true;
+            this.btnFillFrame.Click += new System.EventHandler(this.btnFillFrame_Click);
+            // 
+            // btnFillLayer
+            // 
+            this.btnFillLayer.Location = new System.Drawing.Point(186, 410);
+            this.btnFillLayer.Name = "btnFillLayer";
+            this.btnFillLayer.Size = new System.Drawing.Size(157, 23);
+            this.btnFillLayer.TabIndex = 10;
+            this.btnFillLayer.Text = "Fill Layer";
+            this.btnFillLayer.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 475);
+            this.ClientSize = new System.Drawing.Size(593, 497);
             this.Controls.Add(this.frameDataGroupBox);
             this.Controls.Add(this.frameOptionsGroupBox);
             this.Controls.Add(this.frameListGroupBox);
@@ -481,6 +504,8 @@
         private System.Windows.Forms.RadioButton brightnessRadio3;
         private System.Windows.Forms.RadioButton brightnessRadio2;
         private System.Windows.Forms.Label brightnessLabel;
+        private System.Windows.Forms.Button btnFillLayer;
+        private System.Windows.Forms.Button btnFillFrame;
     }
 }
 

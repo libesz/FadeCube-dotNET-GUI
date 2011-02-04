@@ -71,7 +71,7 @@ namespace FadeCube
         private void btnRemove_Click(object sender, EventArgs e)
         {
             //Animation.Frames[frameList.SelectedIndex].FrameData = "bla";
-            if (frameList.SelectedIndex > -1)
+            if ((frameList.SelectedIndex > -1) && (frameList.Items.Count > 1))
             {
                 CubeAnimation.removeFrameFromAnimation(Animation, frameList.SelectedIndex);
                 frameList.DataSource = null;
@@ -155,6 +155,11 @@ namespace FadeCube
         private void brightnessRadio_Changed(object sender, EventArgs e)
         {
             layerVisulaiser.actualBrightness = Int16.Parse((sender as RadioButton).Text);
+        }
+
+        private void btnFillFrame_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
