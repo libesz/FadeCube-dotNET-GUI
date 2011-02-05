@@ -46,8 +46,8 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.frameNameLabel = new System.Windows.Forms.Label();
@@ -68,6 +68,7 @@
             this.selectedLayerLabel2 = new System.Windows.Forms.Label();
             this.selectedLayerLabel1 = new System.Windows.Forms.Label();
             this.layerSelectorTrackBar = new System.Windows.Forms.TrackBar();
+            this.animationOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
@@ -120,7 +121,7 @@
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(75, 24);
             this.btnMoveUp.TabIndex = 6;
-            this.btnMoveUp.Text = "Move Up";
+            this.btnMoveUp.Text = "Move up";
             this.btnMoveUp.UseVisualStyleBackColor = true;
             this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
             // 
@@ -130,7 +131,7 @@
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(75, 24);
             this.btnMoveDown.TabIndex = 7;
-            this.btnMoveDown.Text = "Move Down";
+            this.btnMoveDown.Text = "Move down";
             this.btnMoveDown.UseVisualStyleBackColor = true;
             this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
             // 
@@ -157,7 +158,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.settingsToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -175,72 +176,74 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(109, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
-            // settingsToolStripMenuItem
+            // editToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editSettingsToolStripMenuItem});
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem.Text = "Settings";
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectionsToolStripMenuItem,
+            this.animationOptionsToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.editToolStripMenuItem.Text = "Edit";
             // 
-            // editSettingsToolStripMenuItem
+            // connectionsToolStripMenuItem
             // 
-            this.editSettingsToolStripMenuItem.Name = "editSettingsToolStripMenuItem";
-            this.editSettingsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.editSettingsToolStripMenuItem.Text = "Edit Settings";
+            this.connectionsToolStripMenuItem.Name = "connectionsToolStripMenuItem";
+            this.connectionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.connectionsToolStripMenuItem.Text = "Connections";
+            this.connectionsToolStripMenuItem.Click += new System.EventHandler(this.editSettingsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // frameNameLabel
@@ -259,13 +262,14 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 475);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(593, 22);
+            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // StatusLabel1
             // 
             this.StatusLabel1.Name = "StatusLabel1";
-            this.StatusLabel1.Size = new System.Drawing.Size(141, 17);
+            this.StatusLabel1.Size = new System.Drawing.Size(131, 17);
             this.StatusLabel1.Text = "FadeCube GUI started up!";
             // 
             // frameListGroupBox
@@ -339,7 +343,7 @@
             this.btnFillLayer.Name = "btnFillLayer";
             this.btnFillLayer.Size = new System.Drawing.Size(157, 23);
             this.btnFillLayer.TabIndex = 10;
-            this.btnFillLayer.Text = "Fill Layer";
+            this.btnFillLayer.Text = "Fill layer";
             this.btnFillLayer.UseVisualStyleBackColor = true;
             this.btnFillLayer.Click += new System.EventHandler(this.btnFillLayer_Click);
             // 
@@ -349,7 +353,7 @@
             this.btnFillFrame.Name = "btnFillFrame";
             this.btnFillFrame.Size = new System.Drawing.Size(157, 23);
             this.btnFillFrame.TabIndex = 9;
-            this.btnFillFrame.Text = "Fill Frame";
+            this.btnFillFrame.Text = "Fill frame";
             this.btnFillFrame.UseVisualStyleBackColor = true;
             this.btnFillFrame.Click += new System.EventHandler(this.btnFillFrame_Click);
             // 
@@ -422,18 +426,24 @@
             this.selectedLayerLabel1.AutoSize = true;
             this.selectedLayerLabel1.Location = new System.Drawing.Point(6, 389);
             this.selectedLayerLabel1.Name = "selectedLayerLabel1";
-            this.selectedLayerLabel1.Size = new System.Drawing.Size(81, 13);
+            this.selectedLayerLabel1.Size = new System.Drawing.Size(77, 13);
             this.selectedLayerLabel1.TabIndex = 2;
-            this.selectedLayerLabel1.Text = "Selected Layer:";
+            this.selectedLayerLabel1.Text = "Selected layer:";
             // 
             // layerSelectorTrackBar
             // 
-            this.layerSelectorTrackBar.Location = new System.Drawing.Point(6, 341);
+            this.layerSelectorTrackBar.Location = new System.Drawing.Point(9, 341);
             this.layerSelectorTrackBar.Maximum = 9;
             this.layerSelectorTrackBar.Name = "layerSelectorTrackBar";
-            this.layerSelectorTrackBar.Size = new System.Drawing.Size(334, 45);
+            this.layerSelectorTrackBar.Size = new System.Drawing.Size(331, 32);
             this.layerSelectorTrackBar.TabIndex = 1;
             this.layerSelectorTrackBar.Scroll += new System.EventHandler(this.layerSelectorTrackBar_Scroll);
+            // 
+            // animationOptionsToolStripMenuItem
+            // 
+            this.animationOptionsToolStripMenuItem.Name = "animationOptionsToolStripMenuItem";
+            this.animationOptionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.animationOptionsToolStripMenuItem.Text = "Animation options";
             // 
             // MainForm
             // 
@@ -485,8 +495,8 @@
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label frameNameLabel;
@@ -507,6 +517,7 @@
         private System.Windows.Forms.Label brightnessLabel;
         private System.Windows.Forms.Button btnFillLayer;
         private System.Windows.Forms.Button btnFillFrame;
+        private System.Windows.Forms.ToolStripMenuItem animationOptionsToolStripMenuItem;
     }
 }
 

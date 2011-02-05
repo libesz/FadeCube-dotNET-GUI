@@ -159,12 +159,22 @@ namespace FadeCube
 
         private void btnFillFrame_Click(object sender, EventArgs e)
         {
-
+            CubeAnimation.fillFrameInAnimation(Animation, frameList.SelectedIndex, layerVisulaiser.actualBrightness);
+            layerVisulaiser.updateLayerDisplay();
+            CubeAnimation.sendFramePacket(DESTINATION_IP_ADDRESS, DESTINATION_PORT, Animation.Frames[frameList.SelectedIndex].FrameData);
         }
 
         private void btnFillLayer_Click(object sender, EventArgs e)
         {
+            CubeAnimation.fillLayerInAnimation(Animation, frameList.SelectedIndex, layerSelectorTrackBar.Value, layerVisulaiser.actualBrightness);
+            layerVisulaiser.updateLayerDisplay();
+            CubeAnimation.sendFramePacket(DESTINATION_IP_ADDRESS, DESTINATION_PORT, Animation.Frames[frameList.SelectedIndex].FrameData);
+        }
 
+        private void editSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.Show();
         }
     }
 
@@ -222,7 +232,7 @@ namespace FadeCube
                 case 3: this.layerData[ledNumberInLayer].Image = global::FadeCube.Properties.Resources.led_3;
                     break;
             }
-            actualFrameData[(100 * actualLayer) + ledNumberInLayer] = byte.Parse( this.actualBrightness.ToString() );
+            actualFrameData[(100 * actualLayer) + ledNumberInLayer] = (byte)this.actualBrightness;
 
             CubeAnimation.sendFramePacket("192.168.1.99", 1200, this.actualFrameData);
 
@@ -337,6 +347,20 @@ namespace FadeCube
                 buffer[i / 4] |=  (byte)(frameData[i] << (2*(3-(i%4))));
             }
             s.SendTo( buffer, ep);
+        }
+        public static void fillFrameInAnimation(CubeAnimationData animation, int framenumber, int brightness)
+        {
+            for (int i = 0; i < 1000; i++)
+            {
+                animation.Frames[framenumber].FrameData[i] = (byte)brightness;
+            }
+        }
+        public static void fillLayerInAnimation(CubeAnimationData animation, int framenumber, int layernumber, int brightness)
+        {
+            for (int i = 100*layernumber; i < ((100*layernumber)+100); i++)
+            {
+                animation.Frames[framenumber].FrameData[i] = (byte)brightness;
+            }
         }
     }
 
