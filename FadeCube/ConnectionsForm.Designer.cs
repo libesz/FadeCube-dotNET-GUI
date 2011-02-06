@@ -47,7 +47,8 @@
             this.ip1TextBox.Location = new System.Drawing.Point(155, 8);
             this.ip1TextBox.Name = "ip1TextBox";
             this.ip1TextBox.Size = new System.Drawing.Size(100, 20);
-            this.ip1TextBox.TabIndex = 0;
+            this.ip1TextBox.TabIndex = 1;
+            this.ip1TextBox.Leave += new System.EventHandler(this.ipTextBox_Leave);
             // 
             // ip1Label
             // 
@@ -64,7 +65,7 @@
             this.ip1CheckBox.Location = new System.Drawing.Point(12, 11);
             this.ip1CheckBox.Name = "ip1CheckBox";
             this.ip1CheckBox.Size = new System.Drawing.Size(60, 17);
-            this.ip1CheckBox.TabIndex = 2;
+            this.ip1CheckBox.TabIndex = 0;
             this.ip1CheckBox.Text = "Primary";
             this.ip1CheckBox.UseVisualStyleBackColor = true;
             this.ip1CheckBox.CheckedChanged += new System.EventHandler(this.ip1CheckBox_CheckedChanged);
@@ -75,7 +76,7 @@
             this.ip2CheckBox.Location = new System.Drawing.Point(12, 37);
             this.ip2CheckBox.Name = "ip2CheckBox";
             this.ip2CheckBox.Size = new System.Drawing.Size(77, 17);
-            this.ip2CheckBox.TabIndex = 5;
+            this.ip2CheckBox.TabIndex = 3;
             this.ip2CheckBox.Text = "Secondary";
             this.ip2CheckBox.UseVisualStyleBackColor = true;
             this.ip2CheckBox.CheckedChanged += new System.EventHandler(this.ip2CheckBox_CheckedChanged);
@@ -94,7 +95,8 @@
             this.ip2TextBox.Location = new System.Drawing.Point(155, 34);
             this.ip2TextBox.Name = "ip2TextBox";
             this.ip2TextBox.Size = new System.Drawing.Size(100, 20);
-            this.ip2TextBox.TabIndex = 3;
+            this.ip2TextBox.TabIndex = 4;
+            this.ip2TextBox.Leave += new System.EventHandler(this.ipTextBox_Leave);
             // 
             // ip1PortLabel
             // 
@@ -119,32 +121,36 @@
             this.ip1PortTextBox.Location = new System.Drawing.Point(306, 8);
             this.ip1PortTextBox.Name = "ip1PortTextBox";
             this.ip1PortTextBox.Size = new System.Drawing.Size(55, 20);
-            this.ip1PortTextBox.TabIndex = 8;
+            this.ip1PortTextBox.TabIndex = 2;
+            this.ip1PortTextBox.Leave += new System.EventHandler(this.portTextBox_Leave);
             // 
             // ip2PortTextBox
             // 
             this.ip2PortTextBox.Location = new System.Drawing.Point(306, 34);
             this.ip2PortTextBox.Name = "ip2PortTextBox";
             this.ip2PortTextBox.Size = new System.Drawing.Size(55, 20);
-            this.ip2PortTextBox.TabIndex = 9;
+            this.ip2PortTextBox.TabIndex = 6;
+            this.ip2PortTextBox.Leave += new System.EventHandler(this.portTextBox_Leave);
             // 
             // okButton
             // 
             this.okButton.Location = new System.Drawing.Point(12, 67);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(166, 23);
-            this.okButton.TabIndex = 10;
+            this.okButton.TabIndex = 7;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // cancelButton
             // 
             this.cancelButton.Location = new System.Drawing.Point(196, 67);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(166, 23);
-            this.cancelButton.TabIndex = 11;
+            this.cancelButton.TabIndex = 8;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // ConnectionsForm
             // 

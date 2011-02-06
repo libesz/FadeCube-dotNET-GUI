@@ -202,9 +202,9 @@ namespace FadeCube
         [XmlElement(ElementName = "IP2")]
         public string ip2;
         [XmlElement(ElementName = "port1")]
-        public int port1 = 1125;
+        public int port1;
         [XmlElement(ElementName = "port2")]
-        public int port2 = 1125;
+        public int port2;
         [XmlElement(ElementName = "lastPath")]
         public string animationPath = "";
         [XmlElement(ElementName = "selectedBrightness")]
@@ -229,9 +229,14 @@ namespace FadeCube
                 options.animationPath = optionsFile.animationPath;
                 try
                 {
-                    ipa = new IPAddress(byte.Parse(optionsFile.ip1));
+                    ipa = IPAddress.Parse(optionsFile.ip1);
                     options.endPoint1 = new IPEndPoint(ipa, optionsFile.port1);
-                    ipa = new IPAddress(byte.Parse(optionsFile.ip2));
+                }
+                catch
+                { }
+                try
+                {
+                    ipa = IPAddress.Parse(optionsFile.ip2);
                     options.endPoint2 = new IPEndPoint(ipa, optionsFile.port2);
                 }
                 catch
@@ -253,9 +258,13 @@ namespace FadeCube
             try
             {
                 optionsFile.ip1 = options.endPoint1.Address.ToString();
-                optionsFile.ip2 = options.endPoint2.Address.ToString();
                 optionsFile.port1 = options.endPoint1.Port;
-                optionsFile.port2 = options.endPoint2.Port;
+            }
+            catch { }
+            try
+            {
+               optionsFile.ip2 = options.endPoint2.Address.ToString();
+               optionsFile.port2 = options.endPoint2.Port;
             }
             catch { }
 

@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Net;
+using System.Net.Sockets;
 
 namespace FadeCube
 {
@@ -30,6 +32,18 @@ namespace FadeCube
             {
                 ip2CheckBox.Checked = true;
             }
+            if (GuiOptions.endPoint1 is IPEndPoint)
+            {
+                this.ip1TextBox.Text = this.GuiOptions.endPoint1.Address.ToString();
+                this.ip1PortTextBox.Text = this.GuiOptions.endPoint1.Port.ToString();
+            }
+            if (GuiOptions.endPoint2 is IPEndPoint)
+            {
+                this.ip2TextBox.Text = this.GuiOptions.endPoint2.Address.ToString();
+                this.ip2PortTextBox.Text = this.GuiOptions.endPoint2.Port.ToString();
+            }
+            this.AcceptButton = okButton;
+            this.CancelButton = cancelButton;
         }
 
         private void handleIP1(bool onoff)
@@ -71,11 +85,104 @@ namespace FadeCube
         private void ip1CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             handleIP1((sender as CheckBox).Checked);
+            ip1TextBox.Select();
         }
 
         private void ip2CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             handleIP2((sender as CheckBox).Checked);
+            ip2TextBox.Select();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ipTextBox_Leave(object sender, EventArgs e)
+        {
+            if( !validateIpField( (sender as TextBox).Text ) )
+            {
+                MessageBox.Show("Not valid IP address");
+                //(sender as TextBox).Text = "";
+                (sender as TextBox).Select();
+            }
+        }
+
+        private bool validateIpField(string inputValue)
+        {
+            IPAddress dummy_ipa;
+            if(IPAddress.TryParse(inputValue, out dummy_ipa))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void portTextBox_Leave(object sender, EventArgs e)
+        {
+            if (!validatePortField((sender as TextBox).Text))
+            {
+                MessageBox.Show("Not valid port number");
+                //(sender as TextBox).Text = "";
+                (sender as TextBox).Select();
+            }
+        }
+
+        private bool validatePortField(string inputValue)
+        {
+            try
+            {
+                Int32.Parse(inputValue);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            if (ip1CheckBox.Checked)
+            {
+                if (validateIpField(ip1TextBox.Text) && validatePortField(ip1PortTextBox.Text))
+                {
+                    IPAddress ipa = IPAddress.Parse(ip1TextBox.Text);
+                    IPEndPoint ipe = new IPEndPoint(ipa, Int32.Parse(ip1PortTextBox.Text));
+                    GuiOptions.endPoint1 = ipe;
+                    GuiOptions.useEP1 = true;
+                }
+                else
+                {
+                    ip1CheckBox.Checked = false;
+                    GuiOptions.useEP1 = false;
+                }
+            }
+            else
+            {
+                GuiOptions.useEP1 = false;
+            }
+            if (ip2CheckBox.Checked)
+            {
+                if (validateIpField(ip2TextBox.Text) && validatePortField(ip2PortTextBox.Text))
+                {
+                    IPAddress ipa = IPAddress.Parse(ip2TextBox.Text);
+                    IPEndPoint ipe = new IPEndPoint(ipa, Int32.Parse(ip2PortTextBox.Text));
+                    GuiOptions.endPoint2 = ipe;
+                    GuiOptions.useEP2 = true;
+                }
+                else
+                {
+                    ip2CheckBox.Checked = false;
+                    GuiOptions.useEP2 = false;
+                }
+            }
+            else
+            {
+                GuiOptions.useEP2 = false;
+            }
+            this.Close();
         }
     }
 }
