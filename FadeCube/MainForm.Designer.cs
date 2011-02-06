@@ -176,44 +176,45 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // editToolStripMenuItem
@@ -222,20 +223,20 @@
             this.connectionsToolStripMenuItem,
             this.animationOptionsToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // connectionsToolStripMenuItem
             // 
             this.connectionsToolStripMenuItem.Name = "connectionsToolStripMenuItem";
-            this.connectionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.connectionsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.connectionsToolStripMenuItem.Text = "Connections";
             this.connectionsToolStripMenuItem.Click += new System.EventHandler(this.connectionsToolStripMenuItem_Click);
             // 
             // animationOptionsToolStripMenuItem
             // 
             this.animationOptionsToolStripMenuItem.Name = "animationOptionsToolStripMenuItem";
-            this.animationOptionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.animationOptionsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.animationOptionsToolStripMenuItem.Text = "Animation options";
             // 
             // helpToolStripMenuItem
@@ -243,13 +244,13 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // frameNameLabel
@@ -275,7 +276,7 @@
             // StatusLabel1
             // 
             this.StatusLabel1.Name = "StatusLabel1";
-            this.StatusLabel1.Size = new System.Drawing.Size(131, 17);
+            this.StatusLabel1.Size = new System.Drawing.Size(141, 17);
             this.StatusLabel1.Text = "FadeCube GUI started up!";
             // 
             // frameListGroupBox
@@ -438,10 +439,11 @@
             // 
             // layerSelectorTrackBar
             // 
+            this.layerSelectorTrackBar.LargeChange = 1;
             this.layerSelectorTrackBar.Location = new System.Drawing.Point(9, 341);
             this.layerSelectorTrackBar.Maximum = 9;
             this.layerSelectorTrackBar.Name = "layerSelectorTrackBar";
-            this.layerSelectorTrackBar.Size = new System.Drawing.Size(331, 32);
+            this.layerSelectorTrackBar.Size = new System.Drawing.Size(331, 45);
             this.layerSelectorTrackBar.TabIndex = 1;
             this.layerSelectorTrackBar.Scroll += new System.EventHandler(this.layerSelectorTrackBar_Scroll);
             // 
@@ -460,6 +462,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "FadeCube GUI";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);

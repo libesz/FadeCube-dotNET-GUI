@@ -87,5 +87,14 @@ namespace FadeCube.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FadeCube GUI.
+        /// </summary>
+        internal static string mainFormTitle {
+            get {
+                return ResourceManager.GetString("mainFormTitle", resourceCulture);
+            }
+        }
     }
 }

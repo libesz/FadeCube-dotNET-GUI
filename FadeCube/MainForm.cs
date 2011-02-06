@@ -33,9 +33,9 @@ namespace FadeCube
             frameList.DataSource = null;
             frameList.DataSource = Animation.Frames;
             frameList.DisplayMember = "FrameName";
-            layerVisulaiser = new FormCubeLayerVisualiser(frameDataGroupBox.Controls, layerDataLocation, GuiOptions);
+            layerVisulaiser = new FormCubeLayerVisualiser(frameDataGroupBox.Controls, layerDataLocation, GuiOptions, this);
             
-            //ugly part, at startup layerVisualiser object does not exists, so event can not assigned in designer
+            //ugly part, at startup, the layerVisualiser object does not exists, so event can not assigned in designer
             //but is assigned here, thing has to be made as well here (update textboxes, etc)
             frameList.SelectedIndexChanged += new EventHandler(frameList_SelectedIndexChanged);
             layerVisulaiser.actualFrameData = Animation.Frames[0].FrameData;
@@ -68,6 +68,7 @@ namespace FadeCube
                 frameList.DataSource = Animation.Frames;
                 frameList.DisplayMember = "FrameName";
                 frameList.SelectedIndex = frameList.Items.Count - 1;
+                GuiOptions.notSaved = true;
             }
         }
 
@@ -80,6 +81,7 @@ namespace FadeCube
                 frameList.DataSource = null;
                 frameList.DataSource = Animation.Frames;
                 frameList.DisplayMember = "FrameName";
+                GuiOptions.notSaved = true;
             }
         }
 
@@ -92,6 +94,7 @@ namespace FadeCube
                 frameList.DataSource = Animation.Frames;
                 frameList.SelectedIndex = frameList.SelectedIndex - 1;
                 frameList.DisplayMember = "FrameName";
+                GuiOptions.notSaved = true;
             }
         }
 
@@ -104,6 +107,7 @@ namespace FadeCube
                 frameList.DataSource = Animation.Frames;
                 frameList.SelectedIndex = frameList.SelectedIndex + 1;
                 frameList.DisplayMember = "FrameName";
+                GuiOptions.notSaved = true;
             }
         }
 
@@ -124,16 +128,28 @@ namespace FadeCube
                 frameList.DataSource = null;
                 frameList.DataSource = Animation.Frames;
                 frameList.DisplayMember = "FrameName";
+                GuiOptions.animationPath = animationOpenDialog.FileName;
+                this.Text = global::FadeCube.Properties.Resources.mainFormTitle + " - " + GuiOptions.animationPath + " (" + Animation.GlobalOptions.AnimationName + ")";
+                GuiOptions.notSaved = false;
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (GuiOptions.animationPath != "")
+            {
+                CubeAnimation.saveAnimation(Animation, GuiOptions.animationPath);
+            }
+            else
+            {
+                animationSaveDialog.ShowDialog();
+                saveWithDialog();
             }
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            animationSaveDialog.ShowDialog();
-            if (animationSaveDialog.FileName != "")
-            {
-                CubeAnimation.saveAnimation(Animation, animationSaveDialog.FileName);
-            }
+            saveWithDialog();
         }
 
         private void frameList_SelectedIndexChanged(object sender, EventArgs e)
@@ -144,7 +160,19 @@ namespace FadeCube
                 frameTimeTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameTime.ToString();
                 layerVisulaiser.actualFrameData = Animation.Frames[ frameList.SelectedIndex ].FrameData;
                 layerVisulaiser.updateLayerDisplay();
-                CubeAnimation.sendFramePacket(GuiOptions.endPoint1, Animation.Frames[frameList.SelectedIndex].FrameData);
+                handleNetwork();
+            }
+        }
+
+        private void saveWithDialog()
+        {
+            animationSaveDialog.ShowDialog();
+            if (animationSaveDialog.FileName != "")
+            {
+                CubeAnimation.saveAnimation(Animation, animationSaveDialog.FileName);
+                GuiOptions.animationPath = animationSaveDialog.FileName;
+                this.Text = global::FadeCube.Properties.Resources.mainFormTitle + " - " + GuiOptions.animationPath + " (" + Animation.GlobalOptions.AnimationName + ")";
+                GuiOptions.notSaved = false;
             }
         }
 
@@ -164,20 +192,41 @@ namespace FadeCube
         {
             CubeAnimation.fillFrameInAnimation(Animation, frameList.SelectedIndex, GuiOptions.selectedBrightness);
             layerVisulaiser.updateLayerDisplay();
-            CubeAnimation.sendFramePacket(GuiOptions.endPoint1, Animation.Frames[frameList.SelectedIndex].FrameData);
+            handleNetwork();
+            GuiOptions.notSaved = true;
         }
 
         private void btnFillLayer_Click(object sender, EventArgs e)
         {
             CubeAnimation.fillLayerInAnimation(Animation, frameList.SelectedIndex, layerSelectorTrackBar.Value, GuiOptions.selectedBrightness);
             layerVisulaiser.updateLayerDisplay();
-            CubeAnimation.sendFramePacket(GuiOptions.endPoint1, Animation.Frames[frameList.SelectedIndex].FrameData);
+            handleNetwork();
+            GuiOptions.notSaved = true;
         }
 
         private void connectionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConnectionsForm connectionForm = new ConnectionsForm(GuiOptions);
             connectionForm.Show();
+        }
+        public void handleNetwork()
+        {
+            if (GuiOptions.useEP1)
+            {
+                CubeAnimation.sendFramePacket(GuiOptions.endPoint1, Animation.Frames[frameList.SelectedIndex].FrameData);
+            }
+            if (GuiOptions.useEP2)
+            {
+                CubeAnimation.sendFramePacket(GuiOptions.endPoint2, Animation.Frames[frameList.SelectedIndex].FrameData);
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (GuiOptions.notSaved)
+            {
+                saveWithDialog();
+            }
         }
     }
 
@@ -188,6 +237,7 @@ namespace FadeCube
         public IPEndPoint endPoint1, endPoint2;
         public string animationPath = "";
         public int selectedBrightness = 3;
+        public bool notSaved = false;
         //        IPAddress destinationIPaddress = IPAddress.Parse(address);
         //        IPEndPoint ep = new IPEndPoint(destinationIPaddress, port);
     }
@@ -281,12 +331,13 @@ namespace FadeCube
         private PictureBox[] layerData;
         //the upper left coordinate of the LEDlayer
         private Point location;
+        private MainForm parentForm;
 
         public byte[] actualFrameData;
         public int actualLayer = 0;
 
         private guiOptions GuiOptions;
-        public FormCubeLayerVisualiser( Control.ControlCollection parentControl, Point location, guiOptions p_GuiOptions )
+        public FormCubeLayerVisualiser( Control.ControlCollection parentControl, Point location, guiOptions p_GuiOptions, MainForm mainForm )
         {
             int i = 0;
             this.location = location;
@@ -297,6 +348,7 @@ namespace FadeCube
             this.dataPanel.Size = new System.Drawing.Size(320, 320);
             parentControl.Add(dataPanel);            
             layerData = new PictureBox[100];
+            this.parentForm = mainForm;
 
             for (i = 0; i < 100; i++)
             {
@@ -333,9 +385,8 @@ namespace FadeCube
             }
             actualFrameData[(100 * actualLayer) + ledNumberInLayer] = (byte)GuiOptions.selectedBrightness;
 
-            CubeAnimation.sendFramePacket(GuiOptions.endPoint1, this.actualFrameData);
-
-//            MessageBox.Show( "x:" + x.ToString() + ", y:" + y.ToString() );
+            this.parentForm.handleNetwork();
+            GuiOptions.notSaved = true;
         }
 
         public void updateLayerDisplay()
