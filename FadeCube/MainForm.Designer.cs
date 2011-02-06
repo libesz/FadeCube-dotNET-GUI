@@ -48,6 +48,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.animationOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.frameNameLabel = new System.Windows.Forms.Label();
@@ -68,7 +69,6 @@
             this.selectedLayerLabel2 = new System.Windows.Forms.Label();
             this.selectedLayerLabel1 = new System.Windows.Forms.Label();
             this.layerSelectorTrackBar = new System.Windows.Forms.TrackBar();
-            this.animationOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
@@ -230,7 +230,13 @@
             this.connectionsToolStripMenuItem.Name = "connectionsToolStripMenuItem";
             this.connectionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.connectionsToolStripMenuItem.Text = "Connections";
-            this.connectionsToolStripMenuItem.Click += new System.EventHandler(this.editSettingsToolStripMenuItem_Click);
+            this.connectionsToolStripMenuItem.Click += new System.EventHandler(this.connectionsToolStripMenuItem_Click);
+            // 
+            // animationOptionsToolStripMenuItem
+            // 
+            this.animationOptionsToolStripMenuItem.Name = "animationOptionsToolStripMenuItem";
+            this.animationOptionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.animationOptionsToolStripMenuItem.Text = "Animation options";
             // 
             // helpToolStripMenuItem
             // 
@@ -439,12 +445,6 @@
             this.layerSelectorTrackBar.TabIndex = 1;
             this.layerSelectorTrackBar.Scroll += new System.EventHandler(this.layerSelectorTrackBar_Scroll);
             // 
-            // animationOptionsToolStripMenuItem
-            // 
-            this.animationOptionsToolStripMenuItem.Name = "animationOptionsToolStripMenuItem";
-            this.animationOptionsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.animationOptionsToolStripMenuItem.Text = "Animation options";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -457,8 +457,10 @@
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "FadeCube GUI";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

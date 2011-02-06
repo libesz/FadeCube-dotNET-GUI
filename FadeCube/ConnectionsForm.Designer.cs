@@ -1,6 +1,6 @@
 ﻿namespace FadeCube
 {
-    partial class SettingsForm
+    partial class ConnectionsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -32,8 +32,8 @@
             this.ip1Label = new System.Windows.Forms.Label();
             this.ip1CheckBox = new System.Windows.Forms.CheckBox();
             this.ip2CheckBox = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.ip2Label = new System.Windows.Forms.Label();
+            this.ip2TextBox = new System.Windows.Forms.TextBox();
             this.ip1PortLabel = new System.Windows.Forms.Label();
             this.ip2PortLabel = new System.Windows.Forms.Label();
             this.ip1PortTextBox = new System.Windows.Forms.TextBox();
@@ -67,6 +67,7 @@
             this.ip1CheckBox.TabIndex = 2;
             this.ip1CheckBox.Text = "Primary";
             this.ip1CheckBox.UseVisualStyleBackColor = true;
+            this.ip1CheckBox.CheckedChanged += new System.EventHandler(this.ip1CheckBox_CheckedChanged);
             // 
             // ip2CheckBox
             // 
@@ -77,22 +78,23 @@
             this.ip2CheckBox.TabIndex = 5;
             this.ip2CheckBox.Text = "Secondary";
             this.ip2CheckBox.UseVisualStyleBackColor = true;
+            this.ip2CheckBox.CheckedChanged += new System.EventHandler(this.ip2CheckBox_CheckedChanged);
             // 
-            // label1
+            // ip2Label
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(91, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "IP Address";
+            this.ip2Label.AutoSize = true;
+            this.ip2Label.Location = new System.Drawing.Point(91, 38);
+            this.ip2Label.Name = "ip2Label";
+            this.ip2Label.Size = new System.Drawing.Size(58, 13);
+            this.ip2Label.TabIndex = 4;
+            this.ip2Label.Text = "IP Address";
             // 
-            // textBox1
+            // ip2TextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(155, 34);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 3;
+            this.ip2TextBox.Location = new System.Drawing.Point(155, 34);
+            this.ip2TextBox.Name = "ip2TextBox";
+            this.ip2TextBox.Size = new System.Drawing.Size(100, 20);
+            this.ip2TextBox.TabIndex = 3;
             // 
             // ip1PortLabel
             // 
@@ -144,7 +146,7 @@
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
-            // SettingsForm
+            // ConnectionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -156,17 +158,18 @@
             this.Controls.Add(this.ip2PortLabel);
             this.Controls.Add(this.ip1PortLabel);
             this.Controls.Add(this.ip2CheckBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.ip2Label);
+            this.Controls.Add(this.ip2TextBox);
             this.Controls.Add(this.ip1CheckBox);
             this.Controls.Add(this.ip1Label);
             this.Controls.Add(this.ip1TextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SettingsForm";
+            this.Name = "ConnectionsForm";
             this.ShowIcon = false;
-            this.Text = "Settings";
+            this.Text = "Connection settings";
+            this.Shown += new System.EventHandler(this.ConnectionsForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,8 +181,8 @@
         private System.Windows.Forms.Label ip1Label;
         private System.Windows.Forms.CheckBox ip1CheckBox;
         private System.Windows.Forms.CheckBox ip2CheckBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label ip2Label;
+        private System.Windows.Forms.TextBox ip2TextBox;
         private System.Windows.Forms.Label ip1PortLabel;
         private System.Windows.Forms.Label ip2PortLabel;
         private System.Windows.Forms.TextBox ip1PortTextBox;
