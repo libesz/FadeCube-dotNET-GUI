@@ -62,6 +62,12 @@
     <Compile Include="AreYouSure.Designer.cs">
       <DependentUpon>AreYouSure.cs</DependentUpon>
     </Compile>
+    <Compile Include="AnimationOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AnimationOptions.Designer.cs">
+      <DependentUpon>AnimationOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +81,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AreYouSure.resx">
       <DependentUpon>AreYouSure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnimationOptions.resx">
+      <DependentUpon>AnimationOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

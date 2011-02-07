@@ -52,8 +52,6 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.frameNameLabel = new System.Windows.Forms.Label();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.StatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.frameListGroupBox = new System.Windows.Forms.GroupBox();
             this.frameOptionsGroupBox = new System.Windows.Forms.GroupBox();
             this.frameTimeLabel = new System.Windows.Forms.Label();
@@ -74,7 +72,6 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.AnimationPlayerBW = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
             this.frameOptionsGroupBox.SuspendLayout();
             this.frameDataGroupBox.SuspendLayout();
@@ -116,9 +113,14 @@
             this.frameNameTextBox.Size = new System.Drawing.Size(120, 20);
             this.frameNameTextBox.TabIndex = 3;
             // 
+            // animationOpenDialog
+            // 
+            this.animationOpenDialog.Filter = "\"FadeCube Animation Files|*.fadecube\"";
+            // 
             // animationSaveDialog
             // 
             this.animationSaveDialog.DefaultExt = "xml";
+            this.animationSaveDialog.Filter = "FadeCube Animation Files|*.fadecube";
             // 
             // btnMoveUp
             // 
@@ -246,6 +248,7 @@
             this.animationOptionsToolStripMenuItem.Name = "animationOptionsToolStripMenuItem";
             this.animationOptionsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.animationOptionsToolStripMenuItem.Text = "Animation options";
+            this.animationOptionsToolStripMenuItem.Click += new System.EventHandler(this.animationOptionsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -269,23 +272,6 @@
             this.frameNameLabel.Size = new System.Drawing.Size(68, 13);
             this.frameNameLabel.TabIndex = 12;
             this.frameNameLabel.Text = "Frame name:";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 516);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(593, 22);
-            this.statusStrip1.SizingGrip = false;
-            this.statusStrip1.TabIndex = 13;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // StatusLabel1
-            // 
-            this.StatusLabel1.Name = "StatusLabel1";
-            this.StatusLabel1.Size = new System.Drawing.Size(141, 17);
-            this.StatusLabel1.Text = "FadeCube GUI started up!";
             // 
             // frameListGroupBox
             // 
@@ -502,12 +488,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 538);
+            this.ClientSize = new System.Drawing.Size(593, 509);
             this.Controls.Add(this.playOptionsGroupBox);
             this.Controls.Add(this.frameDataGroupBox);
             this.Controls.Add(this.frameOptionsGroupBox);
             this.Controls.Add(this.frameListGroupBox);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MainMenuStrip = this.menuStrip1;
@@ -519,8 +504,6 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.frameListGroupBox.ResumeLayout(false);
             this.frameOptionsGroupBox.ResumeLayout(false);
             this.frameOptionsGroupBox.PerformLayout();
@@ -558,8 +541,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label frameNameLabel;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel StatusLabel1;
         private System.Windows.Forms.GroupBox frameListGroupBox;
         private System.Windows.Forms.GroupBox frameOptionsGroupBox;
         private System.Windows.Forms.Label frameTimeLabel;

@@ -161,12 +161,10 @@ namespace FadeCube
     public class CubeAnimationGlobalOptions
     {
         private string animationName;
-        private int frameTime;
 
         public CubeAnimationGlobalOptions(string animationName, int frameTime)
         {
             this.animationName = animationName;
-            this.frameTime = frameTime;
         }
         public CubeAnimationGlobalOptions() { }
 
@@ -179,17 +177,6 @@ namespace FadeCube
             set
             {
                 animationName = value;
-            }
-        }
-        public int FrameTime
-        {
-            get
-            {
-                return frameTime;
-            }
-            set
-            {
-                frameTime = value;
             }
         }
     }
