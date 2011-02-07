@@ -70,8 +70,9 @@
             this.selectedLayerLabel1 = new System.Windows.Forms.Label();
             this.layerSelectorTrackBar = new System.Windows.Forms.TrackBar();
             this.playOptionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.btnPlay = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.AnimationPlayerBW = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
@@ -331,6 +332,7 @@
             this.frameTimeTextBox.Name = "frameTimeTextBox";
             this.frameTimeTextBox.Size = new System.Drawing.Size(70, 20);
             this.frameTimeTextBox.TabIndex = 13;
+            this.frameTimeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frameTimeTextBox_KeyPress);
             // 
             // frameDataGroupBox
             // 
@@ -465,6 +467,18 @@
             this.playOptionsGroupBox.TabStop = false;
             this.playOptionsGroupBox.Text = "Play options";
             // 
+            // btnStop
+            // 
+            this.btnStop.Enabled = false;
+            this.btnStop.Location = new System.Drawing.Point(118, 19);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(91, 23);
+            this.btnStop.TabIndex = 1;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.EnabledChanged += new System.EventHandler(this.btnStop_EnabledChanged);
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // btnPlay
             // 
             this.btnPlay.Location = new System.Drawing.Point(9, 19);
@@ -473,15 +487,14 @@
             this.btnPlay.TabIndex = 0;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.EnabledChanged += new System.EventHandler(this.btnPlay_EnabledChanged);
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
-            // btnStop
+            // AnimationPlayerBW
             // 
-            this.btnStop.Location = new System.Drawing.Point(118, 19);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(91, 23);
-            this.btnStop.TabIndex = 1;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
+            this.AnimationPlayerBW.WorkerSupportsCancellation = true;
+            this.AnimationPlayerBW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.AnimationPlayerBW_DoWork);
+            this.AnimationPlayerBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.AnimationPlayerBW_RunWorkerCompleted);
             // 
             // MainForm
             // 
@@ -564,6 +577,7 @@
         private System.Windows.Forms.GroupBox playOptionsGroupBox;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnPlay;
+        private System.ComponentModel.BackgroundWorker AnimationPlayerBW;
     }
 }
 

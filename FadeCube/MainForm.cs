@@ -11,6 +11,7 @@ using System.IO;
 using System.Windows.Forms.Layout;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace FadeCube
 {
@@ -54,6 +55,8 @@ namespace FadeCube
             frameNameTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameName;
             frameTimeTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameTime.ToString();
 
+            layerVisulaiser.updateLayerDisplay();
+
             switch (GuiOptions.selectedBrightness)
             {
                 case 0: brightnessRadio0.Checked = true;
@@ -84,15 +87,42 @@ namespace FadeCube
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (frameNameTextBox.Text != "")
+            CubeAnimation.addFrameToAnimation(Animation, validateFrameNameField(), validateTimeField());
+            frameList.DataSource = null;
+            frameList.DataSource = Animation.Frames;
+            frameList.DisplayMember = "FrameName";
+            frameList.SelectedIndex = frameList.Items.Count - 1;
+            GuiOptions.notSaved = true;
+        }
+
+        private string validateFrameNameField()
+        {
+            if (frameNameTextBox.Text == "")
             {
-                int frameTime_i = Int16.Parse(frameTimeTextBox.Text);
-                CubeAnimation.addFrameToAnimation( Animation, frameNameTextBox.Text, frameTime_i );
-                frameList.DataSource = null;
-                frameList.DataSource = Animation.Frames;
-                frameList.DisplayMember = "FrameName";
-                frameList.SelectedIndex = frameList.Items.Count - 1;
-                GuiOptions.notSaved = true;
+                MessageBox.Show("Frame name can not be empty");
+                return "untitled frame";
+            }
+            return frameNameTextBox.Text;
+        }
+
+        private int validateTimeField()
+        {
+            try
+            {
+                int time = Int32.Parse(frameTimeTextBox.Text);
+                if( time > 20 && time < 10000 )
+                {
+                    return time;
+                }
+                else
+                {
+                    MessageBox.Show("Time should be between 20ms and 10000ms");
+                    return 50;
+                }
+            }
+            catch
+            {
+                return 50;
             }
         }
 
@@ -137,7 +167,8 @@ namespace FadeCube
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-            Animation.Frames[frameList.SelectedIndex].FrameName = frameNameTextBox.Text;
+            Animation.Frames[frameList.SelectedIndex].FrameName = validateFrameNameField();
+            Animation.Frames[frameList.SelectedIndex].FrameTime = validateTimeField();
             frameList.DataSource = null;
             frameList.DataSource = Animation.Frames;
             frameList.DisplayMember = "FrameName";
@@ -265,9 +296,21 @@ namespace FadeCube
             }
         }
 
+        public static void handleNetwork( guiOptions GuiOptions,  byte[] frameData)
+        {
+            if (GuiOptions.useEP1)
+            {
+                CubeAnimation.sendFramePacket(GuiOptions.endPoint1, frameData);
+            }
+            if (GuiOptions.useEP2)
+            {
+                CubeAnimation.sendFramePacket(GuiOptions.endPoint2, frameData);
+            }
+        }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            handleAreYouSure();
+            handleAreYouSure( false );
             if (AreYouSureAnswer.answer == 3)
             {
                 e.Cancel = true;
@@ -281,10 +324,10 @@ namespace FadeCube
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            handleAreYouSure();
+            handleAreYouSure( true );
         }
 
-        private void handleAreYouSure()
+        private void handleAreYouSure( bool createNew )
         {
             if(GuiOptions.notSaved)
             {
@@ -293,11 +336,19 @@ namespace FadeCube
 
                 switch (AreYouSureAnswer.answer)
                 {
-                    case 1: saveWithDialog();
+                    case 1:
+                        saveWithDialog();
+                        if (createNew)
+                        {
                             newAnimation();
+                        }
                         break;
-                    case 2: newAnimation();
+                    case 2:
+                        if( createNew )
+                        {
+                            newAnimation();
                             layerVisulaiser.updateLayerDisplay();
+                        }
                         break;
                 }
                 frameList.DataSource = null;
@@ -310,6 +361,65 @@ namespace FadeCube
         private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             saveToolStripMenuItem.Enabled = GuiOptions.notSaved;
+        }
+
+        private void AnimationPlayerBW_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CubeAnimationData Animation = (e.Argument as CubeAnimationData);
+            for (int i = 0; i < Animation.Frames.Length; i++ )
+            {
+                MainForm.handleNetwork(GuiOptions, Animation.Frames[i].FrameData);
+                Thread.Sleep(Animation.Frames[i].FrameTime);
+                if (AnimationPlayerBW.CancellationPending) { e.Cancel = true; return; }
+            }
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            btnPlay.Enabled = false;
+            AnimationPlayerBW.RunWorkerAsync( Animation );
+        }
+
+        private void btnPlay_EnabledChanged(object sender, EventArgs e)
+        {
+            if ((sender as Button).Enabled)
+            {
+                btnStop.Enabled = false;
+            }
+            else
+            {
+                btnStop.Enabled = true;
+            }
+        }
+
+        private void btnStop_EnabledChanged(object sender, EventArgs e)
+        {
+            if ((sender as Button).Enabled)
+            {
+                btnPlay.Enabled = false;
+            }
+            else
+            {
+                btnPlay.Enabled = true;
+            }
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            btnStop.Enabled = false;
+            AnimationPlayerBW.CancelAsync();
+        }
+
+        private void AnimationPlayerBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnStop.Enabled = false;
+        }
+
+        //force to use only digits in time field
+        private void frameTimeTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            const char Delete = (char)8;
+            e.Handled = !Char.IsDigit(e.KeyChar) && e.KeyChar != Delete;
         }
     }
 
