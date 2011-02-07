@@ -29,7 +29,15 @@ namespace FadeCube
         private void MainForm_Load(object sender, EventArgs e)
         {
             GuiOptions = guiOptionsHandler.loadOptions();
-            Animation = new CubeAnimationData();
+
+            if ((GuiOptions.animationPath is string) && (GuiOptions.animationPath != ""))
+            {
+                loadAnimation(GuiOptions.animationPath);
+            }
+            else
+            {
+                Animation = new CubeAnimationData();
+            }
             frameList.DataSource = null;
             frameList.DataSource = Animation.Frames;
             frameList.DisplayMember = "FrameName";
@@ -124,13 +132,7 @@ namespace FadeCube
             animationOpenDialog.ShowDialog();
             if (animationOpenDialog.FileName != "")
             {
-                Animation = CubeAnimation.loadAnimation(animationOpenDialog.FileName);
-                frameList.DataSource = null;
-                frameList.DataSource = Animation.Frames;
-                frameList.DisplayMember = "FrameName";
-                GuiOptions.animationPath = animationOpenDialog.FileName;
-                this.Text = global::FadeCube.Properties.Resources.mainFormTitle + " - " + GuiOptions.animationPath + " (" + Animation.GlobalOptions.AnimationName + ")";
-                GuiOptions.notSaved = false;
+                loadAnimation( animationOpenDialog.FileName );
             }
         }
 
@@ -162,6 +164,16 @@ namespace FadeCube
                 layerVisulaiser.updateLayerDisplay();
                 handleNetwork();
             }
+        }
+        private void loadAnimation(string path)
+        {
+            Animation = CubeAnimation.loadAnimation(path);
+            frameList.DataSource = null;
+            frameList.DataSource = Animation.Frames;
+            frameList.DisplayMember = "FrameName";
+            GuiOptions.animationPath = animationOpenDialog.FileName;
+            this.Text = global::FadeCube.Properties.Resources.mainFormTitle + " - " + GuiOptions.animationPath + " (" + Animation.GlobalOptions.AnimationName + ")";
+            GuiOptions.notSaved = false;
         }
 
         private void saveWithDialog()
@@ -227,6 +239,11 @@ namespace FadeCube
             {
                 saveWithDialog();
             }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 
