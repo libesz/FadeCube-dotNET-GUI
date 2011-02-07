@@ -69,12 +69,16 @@
             this.selectedLayerLabel2 = new System.Windows.Forms.Label();
             this.selectedLayerLabel1 = new System.Windows.Forms.Label();
             this.layerSelectorTrackBar = new System.Windows.Forms.TrackBar();
+            this.playOptionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
             this.frameOptionsGroupBox.SuspendLayout();
             this.frameDataGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layerSelectorTrackBar)).BeginInit();
+            this.playOptionsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // frameList
@@ -178,43 +182,45 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.DropDownOpening += new System.EventHandler(this.fileToolStripMenuItem_DropDownOpening);
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(109, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -267,7 +273,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 475);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 516);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(593, 22);
             this.statusStrip1.SizingGrip = false;
@@ -340,14 +346,14 @@
             this.frameDataGroupBox.Controls.Add(this.layerSelectorTrackBar);
             this.frameDataGroupBox.Location = new System.Drawing.Point(233, 27);
             this.frameDataGroupBox.Name = "frameDataGroupBox";
-            this.frameDataGroupBox.Size = new System.Drawing.Size(349, 443);
+            this.frameDataGroupBox.Size = new System.Drawing.Size(349, 473);
             this.frameDataGroupBox.TabIndex = 16;
             this.frameDataGroupBox.TabStop = false;
             this.frameDataGroupBox.Text = "Frame data";
             // 
             // btnFillLayer
             // 
-            this.btnFillLayer.Location = new System.Drawing.Point(186, 410);
+            this.btnFillLayer.Location = new System.Drawing.Point(186, 439);
             this.btnFillLayer.Name = "btnFillLayer";
             this.btnFillLayer.Size = new System.Drawing.Size(157, 23);
             this.btnFillLayer.TabIndex = 10;
@@ -357,7 +363,7 @@
             // 
             // btnFillFrame
             // 
-            this.btnFillFrame.Location = new System.Drawing.Point(6, 410);
+            this.btnFillFrame.Location = new System.Drawing.Point(6, 439);
             this.btnFillFrame.Name = "btnFillFrame";
             this.btnFillFrame.Size = new System.Drawing.Size(157, 23);
             this.btnFillFrame.TabIndex = 9;
@@ -368,7 +374,7 @@
             // brightnessLabel
             // 
             this.brightnessLabel.AutoSize = true;
-            this.brightnessLabel.Location = new System.Drawing.Point(127, 389);
+            this.brightnessLabel.Location = new System.Drawing.Point(129, 409);
             this.brightnessLabel.Name = "brightnessLabel";
             this.brightnessLabel.Size = new System.Drawing.Size(59, 13);
             this.brightnessLabel.TabIndex = 8;
@@ -378,7 +384,7 @@
             // 
             this.brightnessRadio3.AutoSize = true;
             this.brightnessRadio3.Checked = true;
-            this.brightnessRadio3.Location = new System.Drawing.Point(302, 387);
+            this.brightnessRadio3.Location = new System.Drawing.Point(304, 407);
             this.brightnessRadio3.Name = "brightnessRadio3";
             this.brightnessRadio3.Size = new System.Drawing.Size(31, 17);
             this.brightnessRadio3.TabIndex = 7;
@@ -390,7 +396,7 @@
             // brightnessRadio2
             // 
             this.brightnessRadio2.AutoSize = true;
-            this.brightnessRadio2.Location = new System.Drawing.Point(265, 387);
+            this.brightnessRadio2.Location = new System.Drawing.Point(267, 407);
             this.brightnessRadio2.Name = "brightnessRadio2";
             this.brightnessRadio2.Size = new System.Drawing.Size(31, 17);
             this.brightnessRadio2.TabIndex = 6;
@@ -401,7 +407,7 @@
             // brightnessRadio1
             // 
             this.brightnessRadio1.AutoSize = true;
-            this.brightnessRadio1.Location = new System.Drawing.Point(229, 387);
+            this.brightnessRadio1.Location = new System.Drawing.Point(231, 407);
             this.brightnessRadio1.Name = "brightnessRadio1";
             this.brightnessRadio1.Size = new System.Drawing.Size(31, 17);
             this.brightnessRadio1.TabIndex = 5;
@@ -412,7 +418,7 @@
             // brightnessRadio0
             // 
             this.brightnessRadio0.AutoSize = true;
-            this.brightnessRadio0.Location = new System.Drawing.Point(192, 387);
+            this.brightnessRadio0.Location = new System.Drawing.Point(194, 407);
             this.brightnessRadio0.Name = "brightnessRadio0";
             this.brightnessRadio0.Size = new System.Drawing.Size(31, 17);
             this.brightnessRadio0.TabIndex = 4;
@@ -423,7 +429,7 @@
             // selectedLayerLabel2
             // 
             this.selectedLayerLabel2.AutoSize = true;
-            this.selectedLayerLabel2.Location = new System.Drawing.Point(84, 389);
+            this.selectedLayerLabel2.Location = new System.Drawing.Point(86, 409);
             this.selectedLayerLabel2.Name = "selectedLayerLabel2";
             this.selectedLayerLabel2.Size = new System.Drawing.Size(13, 13);
             this.selectedLayerLabel2.TabIndex = 3;
@@ -432,7 +438,7 @@
             // selectedLayerLabel1
             // 
             this.selectedLayerLabel1.AutoSize = true;
-            this.selectedLayerLabel1.Location = new System.Drawing.Point(6, 389);
+            this.selectedLayerLabel1.Location = new System.Drawing.Point(8, 409);
             this.selectedLayerLabel1.Name = "selectedLayerLabel1";
             this.selectedLayerLabel1.Size = new System.Drawing.Size(77, 13);
             this.selectedLayerLabel1.TabIndex = 2;
@@ -441,18 +447,48 @@
             // layerSelectorTrackBar
             // 
             this.layerSelectorTrackBar.LargeChange = 1;
-            this.layerSelectorTrackBar.Location = new System.Drawing.Point(9, 341);
+            this.layerSelectorTrackBar.Location = new System.Drawing.Point(11, 361);
             this.layerSelectorTrackBar.Maximum = 9;
             this.layerSelectorTrackBar.Name = "layerSelectorTrackBar";
             this.layerSelectorTrackBar.Size = new System.Drawing.Size(331, 45);
             this.layerSelectorTrackBar.TabIndex = 1;
             this.layerSelectorTrackBar.Scroll += new System.EventHandler(this.layerSelectorTrackBar_Scroll);
             // 
+            // playOptionsGroupBox
+            // 
+            this.playOptionsGroupBox.Controls.Add(this.btnStop);
+            this.playOptionsGroupBox.Controls.Add(this.btnPlay);
+            this.playOptionsGroupBox.Location = new System.Drawing.Point(12, 447);
+            this.playOptionsGroupBox.Name = "playOptionsGroupBox";
+            this.playOptionsGroupBox.Size = new System.Drawing.Size(215, 53);
+            this.playOptionsGroupBox.TabIndex = 17;
+            this.playOptionsGroupBox.TabStop = false;
+            this.playOptionsGroupBox.Text = "Play options";
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Location = new System.Drawing.Point(9, 19);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(91, 23);
+            this.btnPlay.TabIndex = 0;
+            this.btnPlay.Text = "Play";
+            this.btnPlay.UseVisualStyleBackColor = true;
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(118, 19);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(91, 23);
+            this.btnStop.TabIndex = 1;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 497);
+            this.ClientSize = new System.Drawing.Size(593, 538);
+            this.Controls.Add(this.playOptionsGroupBox);
             this.Controls.Add(this.frameDataGroupBox);
             this.Controls.Add(this.frameOptionsGroupBox);
             this.Controls.Add(this.frameListGroupBox);
@@ -476,6 +512,7 @@
             this.frameDataGroupBox.ResumeLayout(false);
             this.frameDataGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layerSelectorTrackBar)).EndInit();
+            this.playOptionsGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -524,6 +561,9 @@
         private System.Windows.Forms.Button btnFillLayer;
         private System.Windows.Forms.Button btnFillFrame;
         private System.Windows.Forms.ToolStripMenuItem animationOptionsToolStripMenuItem;
+        private System.Windows.Forms.GroupBox playOptionsGroupBox;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnPlay;
     }
 }
 

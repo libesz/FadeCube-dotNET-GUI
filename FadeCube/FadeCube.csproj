@@ -49,11 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CubeAnimation.cs" />
     <Compile Include="ConnectionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConnectionsForm.Designer.cs">
       <DependentUpon>ConnectionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AreYouSure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AreYouSure.Designer.cs">
+      <DependentUpon>AreYouSure.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -65,6 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ConnectionsForm.resx">
       <DependentUpon>ConnectionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AreYouSure.resx">
+      <DependentUpon>AreYouSure.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
