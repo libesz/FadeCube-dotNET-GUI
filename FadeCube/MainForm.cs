@@ -173,6 +173,7 @@ namespace FadeCube
             frameList.DataSource = null;
             frameList.DataSource = Animation.Frames;
             frameList.DisplayMember = "FrameName";
+            GuiOptions.notSaved = true;
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -355,7 +356,15 @@ namespace FadeCube
                 switch (AreYouSureAnswer.answer)
                 {
                     case 1:
-                        saveWithDialog();
+                        if (GuiOptions.animationPath != "")
+                        {
+                            CubeAnimation.saveAnimation(Animation, GuiOptions.animationPath);
+                            GuiOptions.notSaved = false;
+                        }
+                        else
+                        {
+                            saveWithDialog();
+                        }
                         if (createNew)
                         {
                             newAnimation();
