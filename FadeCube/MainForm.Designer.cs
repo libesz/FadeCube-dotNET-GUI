@@ -492,8 +492,10 @@
             // 
             // AnimationPlayerBW
             // 
+            this.AnimationPlayerBW.WorkerReportsProgress = true;
             this.AnimationPlayerBW.WorkerSupportsCancellation = true;
             this.AnimationPlayerBW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.AnimationPlayerBW_DoWork);
+            this.AnimationPlayerBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.AnimationPlayerBW_ProgressChanged);
             this.AnimationPlayerBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.AnimationPlayerBW_RunWorkerCompleted);
             // 
             // MainForm

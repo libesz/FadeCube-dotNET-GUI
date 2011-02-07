@@ -57,6 +57,7 @@ namespace FadeCube
 
             layerVisulaiser.updateLayerDisplay();
 
+            btnMoveUp.Enabled = false;
             switch (GuiOptions.selectedBrightness)
             {
                 case 0: brightnessRadio0.Checked = true;
@@ -205,6 +206,23 @@ namespace FadeCube
         {
             if (frameList.SelectedIndex > -1)
             {
+                if (frameList.SelectedIndex == 0)
+                {
+                    btnMoveUp.Enabled = false;
+                }
+                else
+                {
+                    btnMoveUp.Enabled = true;
+                }
+                if (frameList.SelectedIndex == ( Animation.Frames.Length - 1 ))
+                {
+                    btnMoveDown.Enabled = false;
+                }
+                else
+                {
+                    btnMoveDown.Enabled = true;
+                }
+
                 frameNameTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameName;
                 frameTimeTextBox.Text = Animation.Frames[frameList.SelectedIndex].FrameTime.ToString();
                 layerVisulaiser.actualFrameData = Animation.Frames[ frameList.SelectedIndex ].FrameData;
@@ -368,9 +386,10 @@ namespace FadeCube
             CubeAnimationData Animation = (e.Argument as CubeAnimationData);
             for (int i = 0; i < Animation.Frames.Length; i++ )
             {
-                MainForm.handleNetwork(GuiOptions, Animation.Frames[i].FrameData);
+                //MainForm.handleNetwork(GuiOptions, Animation.Frames[i].FrameData);
                 Thread.Sleep(Animation.Frames[i].FrameTime);
                 if (AnimationPlayerBW.CancellationPending) { e.Cancel = true; return; }
+                AnimationPlayerBW.ReportProgress(1, i);
             }
         }
 
@@ -420,6 +439,11 @@ namespace FadeCube
         {
             const char Delete = (char)8;
             e.Handled = !Char.IsDigit(e.KeyChar) && e.KeyChar != Delete;
+        }
+
+        private void AnimationPlayerBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            frameList.SelectedIndex = (int)e.UserState;
         }
     }
 
