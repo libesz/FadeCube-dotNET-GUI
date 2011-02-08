@@ -85,6 +85,7 @@
             this.frameList.Name = "frameList";
             this.frameList.Size = new System.Drawing.Size(120, 199);
             this.frameList.TabIndex = 0;
+            this.frameList.DisplayMemberChanged += new System.EventHandler(this.frameList_DisplayMemberChanged);
             // 
             // btnAdd
             // 
@@ -115,7 +116,7 @@
             // 
             // animationOpenDialog
             // 
-            this.animationOpenDialog.Filter = "\"FadeCube Animation Files|*.fadecube\"";
+            this.animationOpenDialog.Filter = "FadeCube Animation Files|*.fadecube";
             // 
             // animationSaveDialog
             // 
@@ -160,6 +161,7 @@
             this.btnDuplicate.TabIndex = 9;
             this.btnDuplicate.Text = "Duplicate selected";
             this.btnDuplicate.UseVisualStyleBackColor = true;
+            this.btnDuplicate.Click += new System.EventHandler(this.btnDuplicate_Click);
             // 
             // menuStrip1
             // 

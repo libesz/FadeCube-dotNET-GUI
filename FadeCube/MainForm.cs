@@ -100,6 +100,14 @@ namespace FadeCube
             GuiOptions.notSaved = true;
         }
 
+        private void btnDuplicate_Click(object sender, EventArgs e)
+        {
+            CubeAnimation.duplicateFrameInAnimation(Animation, frameList.SelectedIndex, validateFrameNameField(frameNameTextBox.Text), validateTimeField(frameTimeTextBox.Text));
+            refreshFrameListDS();
+            frameList.SelectedIndex = frameList.Items.Count - 1;
+            GuiOptions.notSaved = true;
+        }
+
         public static string validateFrameNameField( string text )
         {
             if (text == "")
@@ -115,7 +123,7 @@ namespace FadeCube
             try
             {
                 int time = Int32.Parse(text);
-                if( time > 20 && time < 10000 )
+                if( time >= 20 && time <= 10000 )
                 {
                     return time;
                 }
@@ -295,7 +303,7 @@ namespace FadeCube
         private void connectionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConnectionsForm connectionForm = new ConnectionsForm(GuiOptions);
-            connectionForm.Show();
+            connectionForm.ShowDialog();
         }
         public void handleNetwork()
         {
@@ -377,10 +385,11 @@ namespace FadeCube
             CubeAnimationData Animation = (e.Argument as CubeAnimationData);
             for (int i = 0; i < Animation.Frames.Length; i++ )
             {
+                AnimationPlayerBW.ReportProgress(1, i);
                 //MainForm.handleNetwork(GuiOptions, Animation.Frames[i].FrameData);
                 Thread.Sleep(Animation.Frames[i].FrameTime);
                 if (AnimationPlayerBW.CancellationPending) { e.Cancel = true; return; }
-                AnimationPlayerBW.ReportProgress(1, i);
+
             }
         }
 
@@ -442,6 +451,11 @@ namespace FadeCube
             AnimationOptionsForm animationOptionsForm = new AnimationOptionsForm( GuiOptions, Animation.GlobalOptions );
             animationOptionsForm.ShowDialog();
             this.Text = global::FadeCube.Properties.Resources.mainFormTitle + " - " + Animation.GlobalOptions.AnimationName + " (" + GuiOptions.animationPath + ")";
+        }
+
+        private void frameList_DisplayMemberChanged(object sender, EventArgs e)
+        {
+            btnRemove.Enabled = !(frameList.Items.Count == 1);
         }
     }
 

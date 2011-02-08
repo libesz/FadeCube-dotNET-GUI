@@ -48,6 +48,31 @@ namespace FadeCube
             animation.Frames = newFrames;
         }
 
+        public static void duplicateFrameInAnimation(CubeAnimationData animation, int frameNumber, string frameName, int frameTime)
+        {
+            int i = 0;
+            CubeAnimationFrame[] newFrames = new CubeAnimationFrame[animation.Frames.Length + 1];
+            for (i = 0; i < animation.Frames.Length + 1; i++)
+            {
+                if (i <= frameNumber)
+                {
+                    newFrames[i] = animation.Frames[i];
+                }
+                else if (i == frameNumber + 1)
+                {
+                    newFrames[i] = new CubeAnimationFrame();
+                    newFrames[i].FrameData = (byte[])animation.Frames[frameNumber].FrameData.Clone();
+                    newFrames[i].FrameName = frameName;
+                    newFrames[i].FrameTime = frameTime;
+                }
+                else if (i > frameNumber + 1)
+                {
+                    newFrames[i + 1] = animation.Frames[i];
+                }
+            }
+            animation.Frames = newFrames;
+        }
+
         public static void removeFrameFromAnimation(CubeAnimationData animation, int frameNumber)
         {
             int i = 0;
@@ -97,10 +122,12 @@ namespace FadeCube
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             int i = 0;
-            byte[] buffer = new byte[250];
+            byte[] buffer = new byte[251];
+            buffer[0] = 1;
             for (i = 0; i < 1000; i++)
             {
-                buffer[i / 4] |= (byte)(frameData[i] << (2 * (3 - (i % 4))));
+                buffer[1 + (i / 4)
+                    ] |= (byte)(frameData[i] << (2 * (3 - (i % 4))));
             }
             s.SendTo(buffer, ep);
         }

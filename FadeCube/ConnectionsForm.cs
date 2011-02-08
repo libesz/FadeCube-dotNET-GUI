@@ -54,6 +54,7 @@ namespace FadeCube
                 ip1TextBox.Enabled = true;
                 ip1PortLabel.Enabled = true;
                 ip1PortTextBox.Enabled = true;
+                btnCheck1.Enabled = true;
             }
             else
             {
@@ -61,6 +62,7 @@ namespace FadeCube
                 ip1TextBox.Enabled = false;
                 ip1PortLabel.Enabled = false;
                 ip1PortTextBox.Enabled = false;
+                btnCheck1.Enabled = false;
             }
         }
 
@@ -72,6 +74,7 @@ namespace FadeCube
                 ip2TextBox.Enabled = true;
                 ip2PortLabel.Enabled = true;
                 ip2PortTextBox.Enabled = true;
+                btnCheck2.Enabled = true;
             }
             else
             {
@@ -79,6 +82,7 @@ namespace FadeCube
                 ip2TextBox.Enabled = false;
                 ip2PortLabel.Enabled = false;
                 ip2PortTextBox.Enabled = false;
+                btnCheck2.Enabled = false;
             }
         }
 
@@ -183,6 +187,33 @@ namespace FadeCube
                 GuiOptions.useEP2 = false;
             }
             this.Close();
+        }
+
+        private void btnCheck1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show( checkDeviceConnection( ip1TextBox.Text, ip1PortTextBox.Text ));
+        }
+
+        private string checkDeviceConnection(string ip, string port)
+        {
+            byte[] data = new byte[1];
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ip), Int32.Parse(port));
+            Socket server = new Socket(AddressFamily.InterNetwork,SocketType.Dgram, ProtocolType.Udp);
+            server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
+
+            server.SendTo(data, data.Length, SocketFlags.None, ipep);
+            IPEndPoint senderEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            EndPoint tmpRemote = (EndPoint)senderEndPoint;
+            data = new byte[30];
+            try
+            {
+                int recv = server.ReceiveFrom(data, ref tmpRemote);
+            }
+            catch
+            {
+                return "No answer recieved!";
+            }
+            return "Device is: " + System.Text.ASCIIEncoding.ASCII.GetString(data);
         }
     }
 }

@@ -40,6 +40,8 @@
             this.ip2PortTextBox = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.btnCheck1 = new System.Windows.Forms.Button();
+            this.btnCheck2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ip1TextBox
@@ -136,7 +138,7 @@
             // 
             this.okButton.Location = new System.Drawing.Point(12, 67);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(166, 23);
+            this.okButton.Size = new System.Drawing.Size(226, 23);
             this.okButton.TabIndex = 7;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
@@ -145,13 +147,32 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(196, 67);
+            this.cancelButton.Location = new System.Drawing.Point(244, 67);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(166, 23);
+            this.cancelButton.Size = new System.Drawing.Size(199, 23);
             this.cancelButton.TabIndex = 8;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // btnCheck1
+            // 
+            this.btnCheck1.Location = new System.Drawing.Point(382, 7);
+            this.btnCheck1.Name = "btnCheck1";
+            this.btnCheck1.Size = new System.Drawing.Size(63, 23);
+            this.btnCheck1.TabIndex = 9;
+            this.btnCheck1.Text = "Check";
+            this.btnCheck1.UseVisualStyleBackColor = true;
+            this.btnCheck1.Click += new System.EventHandler(this.btnCheck1_Click);
+            // 
+            // btnCheck2
+            // 
+            this.btnCheck2.Location = new System.Drawing.Point(382, 33);
+            this.btnCheck2.Name = "btnCheck2";
+            this.btnCheck2.Size = new System.Drawing.Size(63, 23);
+            this.btnCheck2.TabIndex = 10;
+            this.btnCheck2.Text = "Check";
+            this.btnCheck2.UseVisualStyleBackColor = true;
             // 
             // ConnectionsForm
             // 
@@ -159,7 +180,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(374, 102);
+            this.ClientSize = new System.Drawing.Size(455, 100);
+            this.Controls.Add(this.btnCheck2);
+            this.Controls.Add(this.btnCheck1);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.ip2PortTextBox);
@@ -198,5 +221,7 @@
         private System.Windows.Forms.TextBox ip2PortTextBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Button btnCheck1;
+        private System.Windows.Forms.Button btnCheck2;
     }
 }
