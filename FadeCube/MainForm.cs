@@ -503,7 +503,7 @@ namespace FadeCube
             try
             {
                 IPAddress ipa;
-                StreamReader sr = File.OpenText("options.xml");
+                StreamReader sr = File.OpenText(Application.StartupPath + "/fadecube_config.xml");
                 XmlSerializer serializer = new XmlSerializer(typeof(guiOptionsFile));
                 optionsFile = (guiOptionsFile)serializer.Deserialize(sr);
                 sr.Close();
@@ -552,7 +552,7 @@ namespace FadeCube
             }
             catch { }
 
-            StreamWriter sw = File.CreateText("options.xml");
+            StreamWriter sw = File.CreateText(Application.StartupPath + "/fadecube_config.xml");
             XmlSerializer serializer = new XmlSerializer(typeof(guiOptionsFile));
             serializer.Serialize(sw, optionsFile);
             sw.Close();
