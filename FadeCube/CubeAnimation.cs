@@ -52,24 +52,15 @@ namespace FadeCube
         {
             int i = 0;
             CubeAnimationFrame[] newFrames = new CubeAnimationFrame[animation.Frames.Length + 1];
-            for (i = 0; i < animation.Frames.Length + 1; i++)
+            for (i = 0; i < animation.Frames.Length; i++)
             {
-                if (i <= frameNumber)
-                {
-                    newFrames[i] = animation.Frames[i];
-                }
-                else if (i == frameNumber + 1)
-                {
-                    newFrames[i] = new CubeAnimationFrame();
-                    newFrames[i].FrameData = (byte[])animation.Frames[frameNumber].FrameData.Clone();
-                    newFrames[i].FrameName = frameName;
-                    newFrames[i].FrameTime = frameTime;
-                }
-                else if (i > frameNumber + 1)
-                {
-                    newFrames[i + 1] = animation.Frames[i];
-                }
+                newFrames[i] = animation.Frames[i];
             }
+            newFrames[i] = new CubeAnimationFrame();
+            newFrames[i].FrameData = (byte[])animation.Frames[frameNumber].FrameData.Clone();
+            newFrames[i].FrameName = frameName.Clone().ToString();
+            newFrames[i].FrameTime = frameTime;
+
             animation.Frames = newFrames;
         }
 
@@ -126,8 +117,7 @@ namespace FadeCube
             buffer[0] = 1;
             for (i = 0; i < 1000; i++)
             {
-                buffer[1 + (i / 4)
-                    ] |= (byte)(frameData[i] << (2 * (3 - (i % 4))));
+                buffer[1 + (i / 4) ] |= (byte)(frameData[i] << (2 * (3 - (i % 4))));
             }
             s.SendTo(buffer, ep);
         }

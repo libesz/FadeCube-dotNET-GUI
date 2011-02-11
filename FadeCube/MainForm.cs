@@ -104,7 +104,7 @@ namespace FadeCube
         {
             CubeAnimation.duplicateFrameInAnimation(Animation, frameList.SelectedIndex, validateFrameNameField(frameNameTextBox.Text), validateTimeField(frameTimeTextBox.Text));
             refreshFrameListDS();
-            frameList.SelectedIndex = frameList.Items.Count - 1;
+            //frameList.SelectedIndex = frameList.Items.Count - 1;
             GuiOptions.notSaved = true;
         }
 

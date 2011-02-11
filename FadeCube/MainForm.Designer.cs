@@ -71,6 +71,7 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
             this.AnimationPlayerBW = new System.ComponentModel.BackgroundWorker();
+            this.contCheckBox1 = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
             this.frameOptionsGroupBox.SuspendLayout();
@@ -336,7 +337,7 @@
             this.frameDataGroupBox.Controls.Add(this.layerSelectorTrackBar);
             this.frameDataGroupBox.Location = new System.Drawing.Point(233, 27);
             this.frameDataGroupBox.Name = "frameDataGroupBox";
-            this.frameDataGroupBox.Size = new System.Drawing.Size(349, 473);
+            this.frameDataGroupBox.Size = new System.Drawing.Size(349, 498);
             this.frameDataGroupBox.TabIndex = 16;
             this.frameDataGroupBox.TabStop = false;
             this.frameDataGroupBox.Text = "Frame data";
@@ -446,11 +447,12 @@
             // 
             // playOptionsGroupBox
             // 
+            this.playOptionsGroupBox.Controls.Add(this.contCheckBox1);
             this.playOptionsGroupBox.Controls.Add(this.btnStop);
             this.playOptionsGroupBox.Controls.Add(this.btnPlay);
             this.playOptionsGroupBox.Location = new System.Drawing.Point(12, 447);
             this.playOptionsGroupBox.Name = "playOptionsGroupBox";
-            this.playOptionsGroupBox.Size = new System.Drawing.Size(215, 53);
+            this.playOptionsGroupBox.Size = new System.Drawing.Size(215, 78);
             this.playOptionsGroupBox.TabIndex = 17;
             this.playOptionsGroupBox.TabStop = false;
             this.playOptionsGroupBox.Text = "Play options";
@@ -486,11 +488,21 @@
             this.AnimationPlayerBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.AnimationPlayerBW_ProgressChanged);
             this.AnimationPlayerBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.AnimationPlayerBW_RunWorkerCompleted);
             // 
+            // contCheckBox1
+            // 
+            this.contCheckBox1.AutoSize = true;
+            this.contCheckBox1.Location = new System.Drawing.Point(12, 48);
+            this.contCheckBox1.Name = "contCheckBox1";
+            this.contCheckBox1.Size = new System.Drawing.Size(109, 17);
+            this.contCheckBox1.TabIndex = 2;
+            this.contCheckBox1.Text = "Continous playing";
+            this.contCheckBox1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 509);
+            this.ClientSize = new System.Drawing.Size(593, 535);
             this.Controls.Add(this.playOptionsGroupBox);
             this.Controls.Add(this.frameDataGroupBox);
             this.Controls.Add(this.frameOptionsGroupBox);
@@ -513,6 +525,7 @@
             this.frameDataGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layerSelectorTrackBar)).EndInit();
             this.playOptionsGroupBox.ResumeLayout(false);
+            this.playOptionsGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -563,6 +576,7 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnPlay;
         private System.ComponentModel.BackgroundWorker AnimationPlayerBW;
+        private System.Windows.Forms.CheckBox contCheckBox1;
     }
 }
 
