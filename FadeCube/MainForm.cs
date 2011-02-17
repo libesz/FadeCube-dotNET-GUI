@@ -382,21 +382,23 @@ namespace FadeCube
 
         private void AnimationPlayerBW_DoWork(object sender, DoWorkEventArgs e)
         {
-            CubeAnimationData Animation = (e.Argument as CubeAnimationData);
-            for (int i = 0; i < Animation.Frames.Length; i++ )
+            CubeAnimationData AnimationData = (e.Argument as AnimationWithGuiOptions).AnimationData;
+            do
             {
-                AnimationPlayerBW.ReportProgress(1, i);
-                //MainForm.handleNetwork(GuiOptions, Animation.Frames[i].FrameData);
-                Thread.Sleep(Animation.Frames[i].FrameTime);
-                if (AnimationPlayerBW.CancellationPending) { e.Cancel = true; return; }
-
-            }
+                for (int i = 0; i < AnimationData.Frames.Length; i++ )
+                {
+                    AnimationPlayerBW.ReportProgress(1, i);
+                    //MainForm.handleNetwork(GuiOptions, Animation.Frames[i].FrameData);
+                    Thread.Sleep(AnimationData.Frames[i].FrameTime);
+                    if (AnimationPlayerBW.CancellationPending) { e.Cancel = true; return; }
+                }
+            }while((e.Argument as AnimationWithGuiOptions).GuiOptions.continousPlaying);
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
             btnPlay.Enabled = false;
-            AnimationPlayerBW.RunWorkerAsync( Animation );
+            AnimationPlayerBW.RunWorkerAsync( new AnimationWithGuiOptions( Animation, GuiOptions ) );
         }
 
         private void btnPlay_EnabledChanged(object sender, EventArgs e)
@@ -457,6 +459,11 @@ namespace FadeCube
         {
             btnRemove.Enabled = !(frameList.Items.Count == 1);
         }
+
+        private void contCheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            GuiOptions.continousPlaying = (sender as CheckBox).Checked;
+        }
     }
 
     public class areYouSureAnswer
@@ -472,6 +479,7 @@ namespace FadeCube
         public string animationPath = "";
         public int selectedBrightness = 3;
         public bool notSaved = false;
+        public bool continousPlaying = false;
         //        IPAddress destinationIPaddress = IPAddress.Parse(address);
         //        IPEndPoint ep = new IPEndPoint(destinationIPaddress, port);
     }
@@ -556,6 +564,18 @@ namespace FadeCube
             XmlSerializer serializer = new XmlSerializer(typeof(guiOptionsFile));
             serializer.Serialize(sw, optionsFile);
             sw.Close();
+        }
+    }
+
+    public class AnimationWithGuiOptions
+    {
+        public CubeAnimationData AnimationData;
+        public guiOptions GuiOptions;
+
+        public AnimationWithGuiOptions(CubeAnimationData AnimationData, guiOptions GuiOptions)
+        {
+            this.AnimationData = AnimationData;
+            this.GuiOptions = GuiOptions;
         }
     }
 

@@ -68,10 +68,10 @@
             this.selectedLayerLabel1 = new System.Windows.Forms.Label();
             this.layerSelectorTrackBar = new System.Windows.Forms.TrackBar();
             this.playOptionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.contCheckBox1 = new System.Windows.Forms.CheckBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
             this.AnimationPlayerBW = new System.ComponentModel.BackgroundWorker();
-            this.contCheckBox1 = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
             this.frameOptionsGroupBox.SuspendLayout();
@@ -457,6 +457,17 @@
             this.playOptionsGroupBox.TabStop = false;
             this.playOptionsGroupBox.Text = "Play options";
             // 
+            // contCheckBox1
+            // 
+            this.contCheckBox1.AutoSize = true;
+            this.contCheckBox1.Location = new System.Drawing.Point(12, 48);
+            this.contCheckBox1.Name = "contCheckBox1";
+            this.contCheckBox1.Size = new System.Drawing.Size(109, 17);
+            this.contCheckBox1.TabIndex = 2;
+            this.contCheckBox1.Text = "Continous playing";
+            this.contCheckBox1.UseVisualStyleBackColor = true;
+            this.contCheckBox1.CheckedChanged += new System.EventHandler(this.contCheckBox1_CheckedChanged);
+            // 
             // btnStop
             // 
             this.btnStop.Enabled = false;
@@ -487,16 +498,6 @@
             this.AnimationPlayerBW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.AnimationPlayerBW_DoWork);
             this.AnimationPlayerBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.AnimationPlayerBW_ProgressChanged);
             this.AnimationPlayerBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.AnimationPlayerBW_RunWorkerCompleted);
-            // 
-            // contCheckBox1
-            // 
-            this.contCheckBox1.AutoSize = true;
-            this.contCheckBox1.Location = new System.Drawing.Point(12, 48);
-            this.contCheckBox1.Name = "contCheckBox1";
-            this.contCheckBox1.Size = new System.Drawing.Size(109, 17);
-            this.contCheckBox1.TabIndex = 2;
-            this.contCheckBox1.Text = "Continous playing";
-            this.contCheckBox1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
