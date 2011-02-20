@@ -195,7 +195,7 @@
             this.Controls.Add(this.ip1CheckBox);
             this.Controls.Add(this.ip1Label);
             this.Controls.Add(this.ip1TextBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConnectionsForm";

@@ -93,8 +93,11 @@
             this.Controls.Add(this.btnYes);
             this.Controls.Add(this.areYouSureLabel2);
             this.Controls.Add(this.areYouSureLabel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AreYouSureForm";
+            this.ShowIcon = false;
             this.Text = "Save";
             this.ResumeLayout(false);
             this.PerformLayout();
