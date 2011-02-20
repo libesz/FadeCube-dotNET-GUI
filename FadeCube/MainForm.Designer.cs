@@ -56,7 +56,7 @@
             this.frameOptionsGroupBox = new System.Windows.Forms.GroupBox();
             this.frameTimeLabel = new System.Windows.Forms.Label();
             this.frameTimeTextBox = new System.Windows.Forms.TextBox();
-            this.frameDataGroupBox = new System.Windows.Forms.GroupBox();
+            this.layerDataGroupBox = new System.Windows.Forms.GroupBox();
             this.btnFillLayer = new System.Windows.Forms.Button();
             this.btnFillFrame = new System.Windows.Forms.Button();
             this.brightnessLabel = new System.Windows.Forms.Label();
@@ -72,12 +72,23 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
             this.AnimationPlayerBW = new System.ComponentModel.BackgroundWorker();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.labelOrientation = new System.Windows.Forms.Label();
+            this.orientationRadioZ = new System.Windows.Forms.RadioButton();
+            this.orientationRadioY = new System.Windows.Forms.RadioButton();
+            this.orientationRadioX = new System.Windows.Forms.RadioButton();
+            this.layerSelection = new System.Windows.Forms.GroupBox();
+            this.drawGroupBox = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.frameListGroupBox.SuspendLayout();
             this.frameOptionsGroupBox.SuspendLayout();
-            this.frameDataGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layerSelectorTrackBar)).BeginInit();
             this.playOptionsGroupBox.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.layerSelection.SuspendLayout();
+            this.drawGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // frameList
@@ -323,28 +334,18 @@
             this.frameTimeTextBox.TabIndex = 13;
             this.frameTimeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frameTimeTextBox_KeyPress);
             // 
-            // frameDataGroupBox
+            // layerDataGroupBox
             // 
-            this.frameDataGroupBox.Controls.Add(this.btnFillLayer);
-            this.frameDataGroupBox.Controls.Add(this.btnFillFrame);
-            this.frameDataGroupBox.Controls.Add(this.brightnessLabel);
-            this.frameDataGroupBox.Controls.Add(this.brightnessRadio3);
-            this.frameDataGroupBox.Controls.Add(this.brightnessRadio2);
-            this.frameDataGroupBox.Controls.Add(this.brightnessRadio1);
-            this.frameDataGroupBox.Controls.Add(this.brightnessRadio0);
-            this.frameDataGroupBox.Controls.Add(this.selectedLayerLabel2);
-            this.frameDataGroupBox.Controls.Add(this.selectedLayerLabel1);
-            this.frameDataGroupBox.Controls.Add(this.layerSelectorTrackBar);
-            this.frameDataGroupBox.Location = new System.Drawing.Point(233, 27);
-            this.frameDataGroupBox.Name = "frameDataGroupBox";
-            this.frameDataGroupBox.Size = new System.Drawing.Size(349, 498);
-            this.frameDataGroupBox.TabIndex = 16;
-            this.frameDataGroupBox.TabStop = false;
-            this.frameDataGroupBox.Text = "Frame data";
+            this.layerDataGroupBox.Location = new System.Drawing.Point(233, 27);
+            this.layerDataGroupBox.Name = "layerDataGroupBox";
+            this.layerDataGroupBox.Size = new System.Drawing.Size(349, 349);
+            this.layerDataGroupBox.TabIndex = 16;
+            this.layerDataGroupBox.TabStop = false;
+            this.layerDataGroupBox.Text = "Layer data";
             // 
             // btnFillLayer
             // 
-            this.btnFillLayer.Location = new System.Drawing.Point(186, 439);
+            this.btnFillLayer.Location = new System.Drawing.Point(176, 61);
             this.btnFillLayer.Name = "btnFillLayer";
             this.btnFillLayer.Size = new System.Drawing.Size(157, 23);
             this.btnFillLayer.TabIndex = 10;
@@ -354,7 +355,7 @@
             // 
             // btnFillFrame
             // 
-            this.btnFillFrame.Location = new System.Drawing.Point(6, 439);
+            this.btnFillFrame.Location = new System.Drawing.Point(8, 61);
             this.btnFillFrame.Name = "btnFillFrame";
             this.btnFillFrame.Size = new System.Drawing.Size(157, 23);
             this.btnFillFrame.TabIndex = 9;
@@ -365,7 +366,7 @@
             // brightnessLabel
             // 
             this.brightnessLabel.AutoSize = true;
-            this.brightnessLabel.Location = new System.Drawing.Point(129, 409);
+            this.brightnessLabel.Location = new System.Drawing.Point(11, 12);
             this.brightnessLabel.Name = "brightnessLabel";
             this.brightnessLabel.Size = new System.Drawing.Size(59, 13);
             this.brightnessLabel.TabIndex = 8;
@@ -375,7 +376,7 @@
             // 
             this.brightnessRadio3.AutoSize = true;
             this.brightnessRadio3.Checked = true;
-            this.brightnessRadio3.Location = new System.Drawing.Point(304, 407);
+            this.brightnessRadio3.Location = new System.Drawing.Point(186, 10);
             this.brightnessRadio3.Name = "brightnessRadio3";
             this.brightnessRadio3.Size = new System.Drawing.Size(31, 17);
             this.brightnessRadio3.TabIndex = 7;
@@ -387,7 +388,7 @@
             // brightnessRadio2
             // 
             this.brightnessRadio2.AutoSize = true;
-            this.brightnessRadio2.Location = new System.Drawing.Point(267, 407);
+            this.brightnessRadio2.Location = new System.Drawing.Point(149, 10);
             this.brightnessRadio2.Name = "brightnessRadio2";
             this.brightnessRadio2.Size = new System.Drawing.Size(31, 17);
             this.brightnessRadio2.TabIndex = 6;
@@ -398,7 +399,7 @@
             // brightnessRadio1
             // 
             this.brightnessRadio1.AutoSize = true;
-            this.brightnessRadio1.Location = new System.Drawing.Point(231, 407);
+            this.brightnessRadio1.Location = new System.Drawing.Point(113, 10);
             this.brightnessRadio1.Name = "brightnessRadio1";
             this.brightnessRadio1.Size = new System.Drawing.Size(31, 17);
             this.brightnessRadio1.TabIndex = 5;
@@ -409,7 +410,7 @@
             // brightnessRadio0
             // 
             this.brightnessRadio0.AutoSize = true;
-            this.brightnessRadio0.Location = new System.Drawing.Point(194, 407);
+            this.brightnessRadio0.Location = new System.Drawing.Point(76, 10);
             this.brightnessRadio0.Name = "brightnessRadio0";
             this.brightnessRadio0.Size = new System.Drawing.Size(31, 17);
             this.brightnessRadio0.TabIndex = 4;
@@ -420,7 +421,7 @@
             // selectedLayerLabel2
             // 
             this.selectedLayerLabel2.AutoSize = true;
-            this.selectedLayerLabel2.Location = new System.Drawing.Point(86, 409);
+            this.selectedLayerLabel2.Location = new System.Drawing.Point(84, 69);
             this.selectedLayerLabel2.Name = "selectedLayerLabel2";
             this.selectedLayerLabel2.Size = new System.Drawing.Size(13, 13);
             this.selectedLayerLabel2.TabIndex = 3;
@@ -429,7 +430,7 @@
             // selectedLayerLabel1
             // 
             this.selectedLayerLabel1.AutoSize = true;
-            this.selectedLayerLabel1.Location = new System.Drawing.Point(8, 409);
+            this.selectedLayerLabel1.Location = new System.Drawing.Point(6, 69);
             this.selectedLayerLabel1.Name = "selectedLayerLabel1";
             this.selectedLayerLabel1.Size = new System.Drawing.Size(77, 13);
             this.selectedLayerLabel1.TabIndex = 2;
@@ -438,19 +439,19 @@
             // layerSelectorTrackBar
             // 
             this.layerSelectorTrackBar.LargeChange = 1;
-            this.layerSelectorTrackBar.Location = new System.Drawing.Point(11, 361);
+            this.layerSelectorTrackBar.Location = new System.Drawing.Point(3, 23);
             this.layerSelectorTrackBar.Maximum = 9;
             this.layerSelectorTrackBar.Name = "layerSelectorTrackBar";
             this.layerSelectorTrackBar.Size = new System.Drawing.Size(331, 45);
             this.layerSelectorTrackBar.TabIndex = 1;
-            this.layerSelectorTrackBar.Scroll += new System.EventHandler(this.layerSelectorTrackBar_Scroll);
+            this.layerSelectorTrackBar.ValueChanged += new System.EventHandler(this.layerSelectorTrackBar_ValueChanged);
             // 
             // playOptionsGroupBox
             // 
             this.playOptionsGroupBox.Controls.Add(this.contCheckBox1);
             this.playOptionsGroupBox.Controls.Add(this.btnStop);
             this.playOptionsGroupBox.Controls.Add(this.btnPlay);
-            this.playOptionsGroupBox.Location = new System.Drawing.Point(12, 447);
+            this.playOptionsGroupBox.Location = new System.Drawing.Point(12, 509);
             this.playOptionsGroupBox.Name = "playOptionsGroupBox";
             this.playOptionsGroupBox.Size = new System.Drawing.Size(215, 78);
             this.playOptionsGroupBox.TabIndex = 17;
@@ -499,13 +500,107 @@
             this.AnimationPlayerBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.AnimationPlayerBW_ProgressChanged);
             this.AnimationPlayerBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.AnimationPlayerBW_RunWorkerCompleted);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.brightnessLabel);
+            this.panel1.Controls.Add(this.brightnessRadio3);
+            this.panel1.Controls.Add(this.brightnessRadio2);
+            this.panel1.Controls.Add(this.brightnessRadio1);
+            this.panel1.Controls.Add(this.brightnessRadio0);
+            this.panel1.Location = new System.Drawing.Point(101, 19);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(237, 36);
+            this.panel1.TabIndex = 11;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.labelOrientation);
+            this.panel2.Controls.Add(this.orientationRadioZ);
+            this.panel2.Controls.Add(this.orientationRadioY);
+            this.panel2.Controls.Add(this.orientationRadioX);
+            this.panel2.Location = new System.Drawing.Point(101, 57);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(232, 36);
+            this.panel2.TabIndex = 12;
+            // 
+            // labelOrientation
+            // 
+            this.labelOrientation.AutoSize = true;
+            this.labelOrientation.Location = new System.Drawing.Point(11, 12);
+            this.labelOrientation.Name = "labelOrientation";
+            this.labelOrientation.Size = new System.Drawing.Size(61, 13);
+            this.labelOrientation.TabIndex = 8;
+            this.labelOrientation.Text = "Orientation:";
+            // 
+            // orientationRadioZ
+            // 
+            this.orientationRadioZ.AutoSize = true;
+            this.orientationRadioZ.Checked = true;
+            this.orientationRadioZ.Location = new System.Drawing.Point(149, 10);
+            this.orientationRadioZ.Name = "orientationRadioZ";
+            this.orientationRadioZ.Size = new System.Drawing.Size(32, 17);
+            this.orientationRadioZ.TabIndex = 6;
+            this.orientationRadioZ.TabStop = true;
+            this.orientationRadioZ.Text = "Z";
+            this.orientationRadioZ.UseVisualStyleBackColor = true;
+            this.orientationRadioZ.CheckedChanged += new System.EventHandler(this.orientationRadio_CheckedChanged);
+            // 
+            // orientationRadioY
+            // 
+            this.orientationRadioY.AutoSize = true;
+            this.orientationRadioY.Location = new System.Drawing.Point(113, 10);
+            this.orientationRadioY.Name = "orientationRadioY";
+            this.orientationRadioY.Size = new System.Drawing.Size(32, 17);
+            this.orientationRadioY.TabIndex = 5;
+            this.orientationRadioY.Text = "Y";
+            this.orientationRadioY.UseVisualStyleBackColor = true;
+            this.orientationRadioY.CheckedChanged += new System.EventHandler(this.orientationRadio_CheckedChanged);
+            // 
+            // orientationRadioX
+            // 
+            this.orientationRadioX.AutoSize = true;
+            this.orientationRadioX.Location = new System.Drawing.Point(76, 10);
+            this.orientationRadioX.Name = "orientationRadioX";
+            this.orientationRadioX.Size = new System.Drawing.Size(32, 17);
+            this.orientationRadioX.TabIndex = 4;
+            this.orientationRadioX.Text = "X";
+            this.orientationRadioX.UseVisualStyleBackColor = true;
+            this.orientationRadioX.CheckedChanged += new System.EventHandler(this.orientationRadio_CheckedChanged);
+            // 
+            // layerSelection
+            // 
+            this.layerSelection.Controls.Add(this.selectedLayerLabel2);
+            this.layerSelection.Controls.Add(this.panel2);
+            this.layerSelection.Controls.Add(this.selectedLayerLabel1);
+            this.layerSelection.Controls.Add(this.layerSelectorTrackBar);
+            this.layerSelection.Location = new System.Drawing.Point(233, 382);
+            this.layerSelection.Name = "layerSelection";
+            this.layerSelection.Size = new System.Drawing.Size(350, 99);
+            this.layerSelection.TabIndex = 13;
+            this.layerSelection.TabStop = false;
+            this.layerSelection.Text = "Layer selection";
+            // 
+            // drawGroupBox
+            // 
+            this.drawGroupBox.Controls.Add(this.panel1);
+            this.drawGroupBox.Controls.Add(this.btnFillLayer);
+            this.drawGroupBox.Controls.Add(this.btnFillFrame);
+            this.drawGroupBox.Location = new System.Drawing.Point(233, 487);
+            this.drawGroupBox.Name = "drawGroupBox";
+            this.drawGroupBox.Size = new System.Drawing.Size(350, 100);
+            this.drawGroupBox.TabIndex = 18;
+            this.drawGroupBox.TabStop = false;
+            this.drawGroupBox.Text = "Draw options";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 535);
+            this.ClientSize = new System.Drawing.Size(593, 597);
+            this.Controls.Add(this.drawGroupBox);
+            this.Controls.Add(this.layerSelection);
             this.Controls.Add(this.playOptionsGroupBox);
-            this.Controls.Add(this.frameDataGroupBox);
+            this.Controls.Add(this.layerDataGroupBox);
             this.Controls.Add(this.frameOptionsGroupBox);
             this.Controls.Add(this.frameListGroupBox);
             this.Controls.Add(this.menuStrip1);
@@ -522,11 +617,16 @@
             this.frameListGroupBox.ResumeLayout(false);
             this.frameOptionsGroupBox.ResumeLayout(false);
             this.frameOptionsGroupBox.PerformLayout();
-            this.frameDataGroupBox.ResumeLayout(false);
-            this.frameDataGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layerSelectorTrackBar)).EndInit();
             this.playOptionsGroupBox.ResumeLayout(false);
             this.playOptionsGroupBox.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.layerSelection.ResumeLayout(false);
+            this.layerSelection.PerformLayout();
+            this.drawGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -561,7 +661,7 @@
         private System.Windows.Forms.GroupBox frameOptionsGroupBox;
         private System.Windows.Forms.Label frameTimeLabel;
         private System.Windows.Forms.TextBox frameTimeTextBox;
-        private System.Windows.Forms.GroupBox frameDataGroupBox;
+        private System.Windows.Forms.GroupBox layerDataGroupBox;
         private System.Windows.Forms.TrackBar layerSelectorTrackBar;
         private System.Windows.Forms.Label selectedLayerLabel2;
         private System.Windows.Forms.Label selectedLayerLabel1;
@@ -578,6 +678,14 @@
         private System.Windows.Forms.Button btnPlay;
         private System.ComponentModel.BackgroundWorker AnimationPlayerBW;
         private System.Windows.Forms.CheckBox contCheckBox1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox layerSelection;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label labelOrientation;
+        private System.Windows.Forms.RadioButton orientationRadioZ;
+        private System.Windows.Forms.RadioButton orientationRadioY;
+        private System.Windows.Forms.RadioButton orientationRadioX;
+        private System.Windows.Forms.GroupBox drawGroupBox;
     }
 }
 
