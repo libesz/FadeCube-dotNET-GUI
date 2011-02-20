@@ -44,7 +44,7 @@ namespace FadeCube
                 newAnimation();
             }
             refreshFrameListDS();
-            layerVisulaiser = new FormCubeLayerVisualiser(frameDataGroupBox.Controls, layerDataLocation, GuiOptions, this);
+            layerVisulaiser = new FormCubeLayerVisualiser(layerDataGroupBox.Controls, layerDataLocation, GuiOptions, this);
             
             //ugly part, at startup, the layerVisualiser object does not exists, so event can not assigned in designer
             //but is assigned here, thing has to be made as well here (update textboxes, etc)
@@ -66,6 +66,16 @@ namespace FadeCube
                 case 3: brightnessRadio3.Checked = true;
                     break;
             }
+            switch (GuiOptions.selectedOrientation)
+            {
+                case 0: orientationRadioX.Checked = true;
+                    break;
+                case 1: orientationRadioY.Checked = true;
+                    break;
+                case 2: orientationRadioZ.Checked = true;
+                    break;
+            }
+            layerSelectorTrackBar.Value = GuiOptions.selectedLayer;
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -272,12 +282,6 @@ namespace FadeCube
             }
         }
 
-        private void layerSelectorTrackBar_Scroll(object sender, EventArgs e)
-        {
-            selectedLayerLabel2.Text = (layerSelectorTrackBar.Value + 1).ToString();
-            layerVisulaiser.actualLayer = layerSelectorTrackBar.Value;
-            layerVisulaiser.updateLayerDisplay();
-        }
         //common event for the 4 brightness radiobuttons
         private void brightnessRadio_Changed(object sender, EventArgs e)
         {
@@ -294,7 +298,7 @@ namespace FadeCube
 
         private void btnFillLayer_Click(object sender, EventArgs e)
         {
-            CubeAnimation.fillLayerInAnimation(Animation, frameList.SelectedIndex, layerSelectorTrackBar.Value, GuiOptions.selectedBrightness);
+            CubeAnimation.fillLayerInAnimation(Animation, frameList.SelectedIndex, GuiOptions);
             layerVisulaiser.updateLayerDisplay();
             handleNetwork();
             GuiOptions.notSaved = true;
@@ -464,6 +468,33 @@ namespace FadeCube
         {
             GuiOptions.continousPlaying = (sender as CheckBox).Checked;
         }
+
+        private void orientationRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioButton).Checked)
+            {
+                if ((sender as RadioButton).Text == "X")
+                {
+                    GuiOptions.selectedOrientation = 0;
+                }
+                else if ((sender as RadioButton).Text == "Y")
+                {
+                    GuiOptions.selectedOrientation = 1;
+                }
+                else
+                {
+                    GuiOptions.selectedOrientation = 2;
+                }
+                layerVisulaiser.updateLayerDisplay();
+            }
+        }
+
+        private void layerSelectorTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            selectedLayerLabel2.Text = (layerSelectorTrackBar.Value + 1).ToString();
+            GuiOptions.selectedLayer = layerSelectorTrackBar.Value;
+            layerVisulaiser.updateLayerDisplay();
+        }
     }
 
     public class areYouSureAnswer
@@ -478,6 +509,8 @@ namespace FadeCube
         public IPEndPoint endPoint1, endPoint2;
         public string animationPath = "";
         public int selectedBrightness = 3;
+        public int selectedLayer = 0;
+        public int selectedOrientation = 2;
         public bool notSaved = false;
         public bool continousPlaying = false;
         //        IPAddress destinationIPaddress = IPAddress.Parse(address);
@@ -501,6 +534,10 @@ namespace FadeCube
         public string animationPath = "";
         [XmlElement(ElementName = "selectedBrightness")]
         public int selectedBrightness = 3;
+        [XmlElement(ElementName = "selectedLayer")]
+        public int selectedLayer = 0;
+        [XmlElement(ElementName = "selectedOrientation")]
+        public int selectedOrientation = 2;
     }
     public class guiOptionsHandler
     {
@@ -518,6 +555,8 @@ namespace FadeCube
                 options.useEP1 = optionsFile.useEP1;
                 options.useEP2 = optionsFile.useEP2;
                 options.selectedBrightness = optionsFile.selectedBrightness;
+                options.selectedLayer = optionsFile.selectedLayer;
+                options.selectedOrientation = optionsFile.selectedOrientation;
                 options.animationPath = optionsFile.animationPath;
                 try
                 {
@@ -546,6 +585,8 @@ namespace FadeCube
             optionsFile.useEP1 = options.useEP1;
             optionsFile.useEP2 = options.useEP2;
             optionsFile.selectedBrightness = options.selectedBrightness;
+            optionsFile.selectedLayer = options.selectedLayer;
+            optionsFile.selectedOrientation = options.selectedOrientation;
             optionsFile.animationPath = options.animationPath;
             try
             {
@@ -588,7 +629,6 @@ namespace FadeCube
         private MainForm parentForm;
 
         public byte[] actualFrameData;
-        public int actualLayer = 0;
 
         private guiOptions GuiOptions;
         public FormCubeLayerVisualiser( Control.ControlCollection parentControl, Point location, guiOptions p_GuiOptions, MainForm mainForm )
@@ -637,7 +677,18 @@ namespace FadeCube
                 case 3: this.layerData[ledNumberInLayer].Image = global::FadeCube.Properties.Resources.led_3;
                     break;
             }
-            actualFrameData[(100 * actualLayer) + ledNumberInLayer] = (byte)GuiOptions.selectedBrightness;
+            switch (this.GuiOptions.selectedOrientation)
+            {
+                case 0:
+                    actualFrameData[((ledNumberInLayer / 10) * 100) + (GuiOptions.selectedLayer * 10) + (ledNumberInLayer % 10)] = (byte)GuiOptions.selectedBrightness;
+                    break;
+                case 1:
+                    this.actualFrameData[((ledNumberInLayer / 10) * 100) + (ledNumberInLayer % 10) * 10 + GuiOptions.selectedLayer] = (byte)GuiOptions.selectedBrightness;
+                    break;
+                case 2:
+                    actualFrameData[(100 * GuiOptions.selectedLayer) + ledNumberInLayer] = (byte)GuiOptions.selectedBrightness;
+                    break;
+            }
 
             this.parentForm.handleNetwork();
             GuiOptions.notSaved = true;
@@ -645,10 +696,22 @@ namespace FadeCube
 
         public void updateLayerDisplay()
         {
-            int i;
+            int i, brightness = 0;
             for (i = 0; i < 100; i++)
             {
-                switch (this.actualFrameData[ (100*this.actualLayer) + i ] )
+                switch (GuiOptions.selectedOrientation)
+                {
+                    case 0:
+                        brightness = this.actualFrameData[((i / 10) * 100) + (GuiOptions.selectedLayer * 10) + (i % 10)];
+                        break;
+                    case 1:
+                        brightness = this.actualFrameData[((i / 10) * 100) + (i % 10) * 10 + GuiOptions.selectedLayer];
+                        break;
+                    case 2:
+                        brightness = this.actualFrameData[(100 * GuiOptions.selectedLayer) + i];
+                        break;
+                }
+                switch (brightness)
                 {
                     case 0: this.layerData[i].Image = global::FadeCube.Properties.Resources.led_0;
                         break;

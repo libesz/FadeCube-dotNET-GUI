@@ -128,11 +128,22 @@ namespace FadeCube
                 animation.Frames[framenumber].FrameData[i] = (byte)brightness;
             }
         }
-        public static void fillLayerInAnimation(CubeAnimationData animation, int framenumber, int layernumber, int brightness)
+        public static void fillLayerInAnimation(CubeAnimationData animation, int framenumber, guiOptions options)
         {
-            for (int i = 100 * layernumber; i < ((100 * layernumber) + 100); i++)
+            for (int i = 0; i < 100; i++)
             {
-                animation.Frames[framenumber].FrameData[i] = (byte)brightness;
+                switch (options.selectedOrientation)
+                {
+                    case 0:
+                        animation.Frames[framenumber].FrameData[((i / 10) * 100) + (options.selectedLayer * 10) + (i % 10)] = (byte)options.selectedBrightness;
+                        break;
+                    case 1:
+                        animation.Frames[framenumber].FrameData[((i / 10) * 100) + (i % 10) * 10 + options.selectedLayer] = (byte)options.selectedBrightness;
+                        break;
+                    case 2:
+                        animation.Frames[framenumber].FrameData[(100 * options.selectedLayer) + i] = (byte)options.selectedBrightness;
+                        break;
+                }
             }
         }
     }
